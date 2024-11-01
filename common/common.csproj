@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EFCore.BulkExtensions" Version="8.1.1" />
+
+    <PackageReference Include="EntityFrameworkCore.Data.QueryBuilder" Version="8.0.2" />
+    <PackageReference Include="EntityFrameworkCore.Data.QueryBuilder.Abstractions" Version="8.0.2" />
+    <PackageReference Include="EntityFrameworkCore.Data.Repository" Version="8.0.2" />
+    <PackageReference Include="EntityFrameworkCore.Data.Repository.Abstractions" Version="8.0.2" />
+    <PackageReference Include="EntityFrameworkCore.Data.UnitOfWork.Abstractions" Version="8.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\interfaces\interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

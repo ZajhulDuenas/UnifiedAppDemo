@@ -1,0 +1,9 @@
+dotnet ef dbcontext scaffold "Server=192.168.0.8;Database=JDV_Examen;User Id=sa;Password=Pa$$w0rd#123;TrustServerCertificate=true;" Microsoft.EntityFrameworkCore.SqlServer -o Models
+
+
+Scaffold-DbContext "Server=192.168.0.8;Database=JDV_Examen;User=exam;Password=Pa$$w0rd#123;TrustServerCertificate=true;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
+Scaffold-DbContext Name=ConnectionStrings:DefaultConnection Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models
+
+
+dotnet ef dbcontext scaffold Name=ConnectionStrings:DefaultConnection Microsoft.EntityFrameworkCore.SqlServer -o Models --startup-project ../Api
