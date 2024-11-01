@@ -14,17 +14,27 @@ public partial class JdvExamenContext : DbContext
     public JdvExamenContext(DbContextOptions<JdvExamenContext> options)
         : base(options)
     {
-    }
+        if (options == null)
+            return;
 
+        this.ChangeTracker.LazyLoadingEnabled = false;
+        this.ChangeTracker.AutoDetectChangesEnabled = false;
+        this.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
+        this.ChangeTracker.AutoDetectChangesEnabled = false;
+    }
+    #region Modelos Existentes
     public virtual DbSet<CatRol> CatRols { get; set; }
 
     public virtual DbSet<CatUsuario> CatUsuarios { get; set; }
 
     public virtual DbSet<TblEmpleado> TblEmpleados { get; set; }
+    #endregion
 
+    /*
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         => optionsBuilder.UseSqlServer("Name=ConnectionStrings:DefaultConnection");
-
+    */
+    
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.UseCollation("Modern_Spanish_CI_AS");

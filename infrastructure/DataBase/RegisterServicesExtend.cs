@@ -1,4 +1,5 @@
 ﻿using EntityFrameworkCore.UnitOfWork.Extensions;
+using infrastructure.jwt;
 using interfaces.DataBase;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -39,7 +40,7 @@ namespace infrastructure.DataBase
 
             services.AddScoped<DbContext, JdvExamenContext>();
             services.AddScoped<IMyUnitOfWork, MyUnitOfWork>();
-            
+
             //   services.AddDbContext<TuDbContext>(options =>
             //options.UseSqlServer(configuration.GetConnectionString(cnn)));
 
