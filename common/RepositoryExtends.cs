@@ -153,11 +153,10 @@ namespace common
                     query.OrderByDescending(orderby);
             }
 
-            var data = await repository.SearchAsync(query)
-
-              .ToPagedListAsync(query.Paging.PageIndex, query.Paging.PageSize, query.Paging.TotalCount)
-
-              .ConfigureAwait(false);
+            var data = await repository
+                .SearchAsync(query)
+                .ToPagedListAsync(query.Paging.PageIndex, query.Paging.PageSize, query.Paging.TotalCount)
+                .ConfigureAwait(false);
 
             return data;
         }

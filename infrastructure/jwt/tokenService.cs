@@ -16,21 +16,21 @@ namespace infrastructure.jwt
     {
         private readonly IConfiguration configuration = configuration;
 
-        public JwtSecurityToken GenerateToken(string userName, Dictionary<string, bool> dictionary, string secretKey, string issuer, string audience)
+        public JwtSecurityToken GenerateToken(string sId, string userName,string realName, Dictionary<string, bool> dictionary, string secretKey, string issuer, string audience)
         {
 
             var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Name, userName),
-                 
-    
+                    new Claim(JwtRegisteredClaimNames.Sub, userName),
+                    new Claim("realName", realName),
+                    new Claim("userId", sId),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+
                 };
 
             foreach (var item in dictionary) {
                 claims.Add(new Claim(type:item.Key, value:item.Value.ToString()));
             }
-
-
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
@@ -47,10 +47,10 @@ namespace infrastructure.jwt
             return token;
         }
 
-        public string GenerateStringToken(string userName, Dictionary<string, bool> dictionary, string secretKey, string issuer, string audience)
+        public string GenerateStringToken(string sId, string userName, string realName, Dictionary<string, bool> dictionary, string secretKey, string issuer, string audience)
         {
 
-            var token = this.GenerateToken(userName, dictionary, secretKey, issuer, audience);
+            var token = this.GenerateToken(sId, userName, realName, dictionary, secretKey, issuer, audience);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }

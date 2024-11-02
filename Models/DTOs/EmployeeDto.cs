@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Models.DTOs
 {
-    public  class EmpleadoDto
+    public  class EmployeeDto
     {
 
         [Required(ErrorMessage = "El nombre de usuario es obligatorio")] // Campo obligatorio
@@ -18,8 +13,8 @@ namespace Models.DTOs
         [StringLength(12, MinimumLength = 3, ErrorMessage = "El RFC tener entre 3 y 12 caracteres")]
         public string? Rfc { get; set; }
 
-        [DataType(DataType.Date)]
+       // [DataType(DataType.Date)]
         [Display(Name = "Fecha de Registro")]
-        public DateOnly? FechaNacimiento { get; set; }
+        public DateTime FechaNacimiento { get; set; }
     }
 }

@@ -49,7 +49,7 @@ namespace UserStories.login
             var jwtIssuer = configuration["Jwt:Issuer"];
             var jwtAudience = configuration["Jwt:Audience"];
 
-            var token = tokenGenerator.GenerateStringToken(request.Username, claim_list, jwtKey, jwtIssuer, jwtAudience);
+            var token = tokenGenerator.GenerateStringToken(user.IdUsuario.ToString(), user.Usuario, user.Nombre,claim_list, jwtKey, jwtIssuer, jwtAudience);
 
             return new Response<ClientToken>() { StatusCode = 200, Message = "OK", Payload = new ClientToken() { Token = token } };
            // return null;

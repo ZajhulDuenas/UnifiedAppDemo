@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Models;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,30 @@ namespace infrastructure.Api
 
             if (response.Success)
                 return new OkObjectResult(response);
+            else
+                return new BadRequestObjectResult(response);
+        }
+
+        public static IActionResult GetCustomActionResult(this Response response)
+       
+        {
+            if (response == null)
+                return new BadRequestObjectResult("Sin respuesta");
+
+            if (response.Success)
+                return new OkObjectResult(response);
+            else
+                return new BadRequestObjectResult(response);
+        }
+
+        public static IActionResult GetCustomActionResult<T>(this Response<T> response)
+           where T : class
+        {
+            if (response == null)
+                return new BadRequestObjectResult("Sin respuesta");
+
+            if (response.Success)
+                return new ObjectResult(response) { StatusCode = response.StatusCode };
             else
                 return new BadRequestObjectResult(response);
         }
