@@ -1,8 +1,7 @@
 ﻿using Interfaces.UserStory;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.DTOs;
-using infrastructure.Api;
+using Api.infrastructure.Api;
 
 namespace WebApi.Controllers
 {

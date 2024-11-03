@@ -4,11 +4,6 @@ using Models;
 using Models.DTOs;
 using common;
 using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Spreadsheet;
-using EntityFrameworkCore.UnitOfWork.Interfaces;
-using System.Collections.Generic;
-using Azure.Core;
-using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace UserStories.login
 {

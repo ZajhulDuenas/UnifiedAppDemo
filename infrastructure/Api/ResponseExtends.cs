@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace infrastructure.Api
+namespace Api.infrastructure.Api
 {
     public static class ResponseExtends
     {

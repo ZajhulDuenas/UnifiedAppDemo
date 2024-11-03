@@ -1,10 +1,7 @@
-﻿using infrastructure.Api;
-using infrastructure.DataBase;
+﻿using infrastructure.DataBase;
 using infrastructure.jwt;
 using Interfaces.UserStory;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using UserStories.login;
@@ -39,7 +36,7 @@ namespace WebApi
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuer = true,
-                        ValidateAudience = true,
+                        ValidateAudience = false,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
                         ValidIssuer = configuration["Jwt:Issuer"],
