@@ -1,0 +1,16 @@
+﻿@page "/login"
+@inherits LoginBase
+
+<h3>Iniciar Sesión</h3>
+<div>
+    <input @bind="Username" placeholder="Usuario" />
+</div>
+<div>
+    <input @bind="Password" type="password" placeholder="Contraseña" />
+</div>
+<button @onclick="HandleLogin">Iniciar Sesión</button>
+
+@if (!string.IsNullOrEmpty(Message))
+{
+    <p>@Message</p>
+}

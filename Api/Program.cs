@@ -1,6 +1,7 @@
 using DocumentFormat.OpenXml.Office2016.Drawing.ChartDrawing;
 using infrastructure.Api;
 using Microsoft.OpenApi.Models;
+using Microsoft.VisualBasic;
 using WebApi;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,14 +21,18 @@ builder.Services.RegisterServices(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 
+
+
 builder.Services.AddCors(options =>
 {
+
     options.AddPolicy("AllowAllOrigins",
-        builder => builder.AllowAnyOrigin()
-                          .AllowAnyMethod()
+      
+builder => builder.WithOrigins("https://localhost:7294")
+                   .AllowAnyOrigin()
+                         .AllowAnyMethod()
                           .AllowAnyHeader());
 });
-
 
 
 builder.Services.AddSwaggerGen(options =>
@@ -62,6 +67,7 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+app.UseCors("AllowAllOrigins");
 
 app.UseRouting();
 

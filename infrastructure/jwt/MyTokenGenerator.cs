@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace infrastructure.jwt
 {
-    public class tokenService(IConfiguration configuration) : ITokenGenerator
+    public class MyTokenGenerator(IConfiguration configuration) : IMyTokenGenerator
     {
         private readonly IConfiguration configuration = configuration;
 

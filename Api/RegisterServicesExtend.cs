@@ -125,7 +125,7 @@ namespace WebApi
 
             #region Services & bussiness logic 
             // services (no functional req)
-            services.AddScoped<ITokenGenerator, tokenService>();
+            services.AddScoped<IMyTokenGenerator, MyTokenGenerator>();
 
             // business logic
             services.AddTransient<ItokenUserStory, tokenUserStory>();

@@ -1,22 +1,22 @@
 ﻿using infrastructure.DataBase;
 using interfaces.DataBase;
 using Models;
-using Models.ClientApi;
 using Models.DTOs;
 using common;
 using infrastructure.jwt;
 using Microsoft.Extensions.Configuration;
 using Interfaces.UserStory;
+using Models.ClientApi;
 
 
 namespace UserStories.login
 {
     public class tokenUserStory(
         IMyUnitOfWork unitOfWork, 
-        ITokenGenerator tokenGenerator) : ItokenUserStory
+        IMyTokenGenerator tokenGenerator) : ItokenUserStory
     {
         private readonly IMyUnitOfWork unitOfWork = unitOfWork;
-        private readonly ITokenGenerator tokenGenerator = tokenGenerator;
+        private readonly IMyTokenGenerator tokenGenerator = tokenGenerator;
         public async Task<Response<ClientToken>> GetToken(IConfiguration configuration, LoginDto request)
         {
 
