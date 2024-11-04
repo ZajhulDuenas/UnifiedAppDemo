@@ -5,33 +5,82 @@
 
 <h1>Employeers</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
 
-@if (forecasts == null)
+@if (isAuthenticated)
 {
-    <p><em>Loading...</em></p>
+    <div class="button-container">
+        <button class="btn btn-primary">Importar</button>
+        |
+        <button class="btn btn-success">Exportar</button>
+    </div>
+    @if (EmployeeList == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>RFC</th>
+                        <th>Fecha Nacimiento</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in EmployeeList)
+                    {
+                        <tr>
+                            <td>@item.IdEmpleado</td>
+                            <td>@item.Nombre</td>
+                            <td>@item.Rfc</td>
+                            <td>@item.FechaNacimiento</td>
+                            <td>
+                                <div class="button-container">
+                                    <button class="btn btn-primary" @onclick="async () => ShowDeleteConfirmation(item.IdEmpleado)">Eliminar</button>
+                                     | 
+                                    <button class="btn btn-success">Modificar</button>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        if (EmployeeList != null)
+        {
+            <div class="button-container">
+                <button class="btn btn-primary" @onclick="OnButtonBeforeClickAsync">Atras</button>
+                |
+                <button class="btn btn-success" @onclick="OnButtonAfterClickAsync">Adelante</button>
+            </div>
+
+        }
+
+    }
+
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in forecasts)
-            {
-                <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <p>Por favor, inicia sesión para continuar.</p>
 }
+
+#<!-- #region Delete Section -->
+@if (ShowConfirmDialog)
+{
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <h3>Confirmación</h3>
+            <p>¿Estás seguro de que deseas eliminar este empleado?</p>
+            <button class="btn btn-danger" @onclick="ConfirmDeleteAsync">Eliminar</button>
+            <button class="btn btn-secondary" @onclick="CloseConfirmDialog">Cancelar</button>
+        </div>
+    </div>
+}
+
+<!-- #endregion -->
+
+

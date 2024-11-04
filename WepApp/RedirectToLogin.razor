@@ -1,0 +1,15 @@
+@inject NavigationManager Navigation
+@inject AuthService AuthService
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var isAuthenticated = await AuthService.IsAuthenticated();
+        if (!isAuthenticated)
+
+        {
+            // Redirigir al login si no está autenticado
+            Navigation.NavigateTo("/login", forceLoad: true);
+        }
+    }
+}

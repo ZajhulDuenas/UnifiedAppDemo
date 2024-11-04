@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "front.UserStories", "front.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{CE6A65DB-11CA-4334-A4C2-F8E1D170C3C4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorAppDemo", "BlazorAppDemo\BlazorAppDemo.csproj", "{E978AC2F-A59E-47B4-87CD-2AC1B7211D2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -84,6 +86,10 @@ Global
 		{CE6A65DB-11CA-4334-A4C2-F8E1D170C3C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE6A65DB-11CA-4334-A4C2-F8E1D170C3C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE6A65DB-11CA-4334-A4C2-F8E1D170C3C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E978AC2F-A59E-47B4-87CD-2AC1B7211D2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E978AC2F-A59E-47B4-87CD-2AC1B7211D2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E978AC2F-A59E-47B4-87CD-2AC1B7211D2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E978AC2F-A59E-47B4-87CD-2AC1B7211D2D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -100,6 +106,7 @@ Global
 		{D6B1CFDE-7C18-484D-AB14-84F6B24F0E0B} = {5D8A0CE5-2037-49EE-AEE3-E6C7DAE5D6D8}
 		{5DA15CEA-E9AF-46F7-9546-95F0B37946DF} = {5D8A0CE5-2037-49EE-AEE3-E6C7DAE5D6D8}
 		{CE6A65DB-11CA-4334-A4C2-F8E1D170C3C4} = {90D9CA33-6A62-4B29-BDB9-EA509710EFAB}
+		{E978AC2F-A59E-47B4-87CD-2AC1B7211D2D} = {90D9CA33-6A62-4B29-BDB9-EA509710EFAB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {973F2A90-D0D2-4D7B-8E8D-335E1DECDDC7}

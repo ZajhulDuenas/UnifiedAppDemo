@@ -14,6 +14,6 @@ namespace UserStories.login
         Task<Response<List<TblEmpleado>>> GetEmployeList();
         Task<Response<List<TblEmpleado>>> GetEmployeList(PaginationDto request);
         Task<Response> ImportData(MemoryStream stream);
-        Task<Response<TblEmpleado>> ModifyEmployee(Employee2Dto request);
+        Task<Response<TblEmpleado>> ModifyEmployee(Employee2RequestDto request);
     }
 }

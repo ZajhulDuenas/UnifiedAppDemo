@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Models.DTOs
 {
-    public class Employee2Dto
+    public class Employee2RequestDto
     {
         [Required(ErrorMessage = "id de empleado requerido")] // Campo obligatorio
         public int EmployeeId { get; set; }

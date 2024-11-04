@@ -16,6 +16,17 @@ public class AuthService
         return !string.IsNullOrEmpty(token);
     }
 
+    public async Task<string> GetToken()
+    {
+        if (await IsAuthenticated()) {
+            var token = await _js.InvokeAsync<string>("localStorage.getItem", "authToken");
+
+            return token;
+        }
+        return "";
+        
+    }
+
     public async Task SetToken(string token)
     {
         await _js.InvokeVoidAsync("localStorage.setItem", "authToken", token);

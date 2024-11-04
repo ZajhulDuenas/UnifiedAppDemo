@@ -25,7 +25,6 @@ namespace Front.Infrastructure.ClientApi
             if (string.IsNullOrEmpty(baseEndPoint))
                 throw new ArgumentException("Parametros de configuración TokenService Api vacios o nulos");
 
-
             try
             {
 
@@ -39,7 +38,6 @@ namespace Front.Infrastructure.ClientApi
                         username = userName,
                         password = password
                     };
-
 
                     using var content = request.SerializeJsonContent();
 

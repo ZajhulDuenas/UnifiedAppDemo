@@ -15,15 +15,13 @@ namespace Models.ClientApi.Base
             //var handler = new HttpClientHandler();
             //handler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => true;
 
-           
-
             client = new HttpClient();
 
             client.DefaultRequestHeaders.Clear();
             client.Timeout = TimeSpan.FromMinutes(5);
             client.DefaultRequestHeaders.ConnectionClose = true;
-            //client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
-            //client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("deflate"));
+            client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+            client.DefaultRequestHeaders.AcceptEncoding.Add(new System.Net.Http.Headers.StringWithQualityHeaderValue("deflate"));
 
             return client;
         }

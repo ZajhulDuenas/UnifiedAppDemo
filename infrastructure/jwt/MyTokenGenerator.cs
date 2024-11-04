@@ -40,7 +40,7 @@ namespace infrastructure.jwt
                 audience: audience,
                 claims: claims,
                   
-                expires: DateTime.Now.AddMinutes(15),
+                expires: DateTime.Now.AddMinutes(120),
                 signingCredentials: creds);
 
            // 

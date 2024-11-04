@@ -135,7 +135,7 @@ namespace UserStories.login
             return result;
         }
 
-        public async Task<Response<TblEmpleado>> ModifyEmployee(Employee2Dto request)
+        public async Task<Response<TblEmpleado>> ModifyEmployee(Employee2RequestDto request)
         {
             Response<TblEmpleado> result = new Response<TblEmpleado>();
             // check user exist on database

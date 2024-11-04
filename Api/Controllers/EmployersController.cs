@@ -82,7 +82,7 @@ namespace WebApi.Controllers
         [HttpPost]
         [Route("ModifyEmployee")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "UpdatePolicy")] // aply custom Politic
-        public async Task<IActionResult> Modify([FromBody] Employee2Dto request)
+        public async Task<IActionResult> Modify([FromBody] Employee2RequestDto request)
         {
 
             if (request == null)

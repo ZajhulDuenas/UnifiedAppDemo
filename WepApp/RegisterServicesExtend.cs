@@ -15,7 +15,7 @@ namespace WepApp
                 return;
 
             services.AddTransient<ITokenServiceClient, TokenServiceClient>();
-
+            services.AddTransient<IEmployeersClient, EmployeersClient>();
             services.Configure<TokenServiceSettings>(configuration.GetSection("TokenServiceSettings"));
 
 
