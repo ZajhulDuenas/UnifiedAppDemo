@@ -96,8 +96,8 @@ namespace UserStories.login
 
             var employeList = await RepoEmpleado.AddAsync(new TblEmpleado()
             {
-                FechaNacimiento = DateOnly.Parse(request.FechaNacimiento.ToString("yyyy-MM-dd")),
-                Nombre = request.Nombre,
+                FechaNacimiento = DateOnly.Parse(request.DateBirth.ToString("yyyy-MM-dd")),
+                Nombre = request.Name,
                 Rfc = request.Rfc
             }).ConfigureAwait(false);
 
@@ -146,12 +146,12 @@ namespace UserStories.login
             if (response.StatusCode >= 400 || response.Payload == null) return response;
 
             var employeeModel = response.Payload;
-            var isEqual = (employeeModel.Nombre == request.Nombre ||
-                           employeeModel.Rfc == request.Rfc ||
-                           employeeModel.FechaNacimiento == DateOnly.Parse(request.FechaNacimiento.ToString("yyyy-MM-dd"))
+            var isDiferent = (employeeModel.Nombre != request.Name ||
+                           employeeModel.Rfc != request.Rfc ||
+                           employeeModel.FechaNacimiento != DateOnly.Parse(request.DateBirth.ToString("yyyy-MM-dd"))
                           );
 
-            if (isEqual)
+            if (!isDiferent)
             {
                 result.StatusCode = 400;
                 result.Message = "No se identificaron cambios";
@@ -161,9 +161,9 @@ namespace UserStories.login
 
             var res1 = await RepoEmpleado.UpdateAsync(x => x.IdEmpleado == request.EmployeeId,
                                                              u1 => u1
-                                                             .SetProperty(x => x.Nombre, request.Nombre)
+                                                             .SetProperty(x => x.Nombre, request.Name)
                                                              .SetProperty(x => x.Rfc, request.Rfc)
-                                                             .SetProperty(x => x.FechaNacimiento, DateOnly.Parse(request.FechaNacimiento.ToString("yyyy-MM-dd")))
+                                                             .SetProperty(x => x.FechaNacimiento, DateOnly.Parse(request.DateBirth.ToString("yyyy-MM-dd")))
                                                             )
                                                 .ConfigureAwait(false);
 

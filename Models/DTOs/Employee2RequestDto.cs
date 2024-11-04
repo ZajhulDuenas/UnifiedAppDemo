@@ -14,7 +14,7 @@ namespace Models.DTOs
 
         [Required(ErrorMessage = "El nombre de usuario es obligatorio")] // Campo obligatorio
         [StringLength(50, MinimumLength = 3, ErrorMessage = "El nombre debe tener entre 3 y 50 caracteres")]
-        public string? Nombre { get; set; }
+        public string? Name { get; set; }
 
         [Required(ErrorMessage = "RFC es obligatorio")] // Campo obligatorio
         [StringLength(12, MinimumLength = 3, ErrorMessage = "El RFC tener entre 3 y 12 caracteres")]
@@ -22,7 +22,7 @@ namespace Models.DTOs
 
         // [DataType(DataType.Date)]
         [Display(Name = "Fecha de Registro")]
-        public DateTime FechaNacimiento { get; set; }
+        public DateTime DateBirth { get; set; }
     }
 
 }

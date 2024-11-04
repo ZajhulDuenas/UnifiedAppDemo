@@ -9,9 +9,18 @@
 @if (isAuthenticated)
 {
     <div class="button-container">
-        <button class="btn btn-primary">Importar</button>
-        |
-        <button class="btn btn-success">Exportar</button>
+        @if (@userModel.AddUser)
+        {
+            <button class="btn btn-primary" @onclick="ShowAddEmployeeModal">Nuevo</button>
+        } |
+        @if( @userModel.ImportList ) 
+        {
+            <button class="btn btn-primary" @onclick="AbrirModal">Importar</button>
+        } |
+        @if( @userModel.ExportList ) 
+        {
+            <button class="btn btn-primary" @onclick="ExportList">Exportar</button>
+        }
     </div>
     @if (EmployeeList == null)
     {
@@ -34,15 +43,20 @@
                     @foreach (var item in EmployeeList)
                     {
                         <tr>
-                            <td>@item.IdEmpleado</td>
-                            <td>@item.Nombre</td>
+                            <td>@item.Id</td>
+                            <td>@item.Name</td>
                             <td>@item.Rfc</td>
-                            <td>@item.FechaNacimiento</td>
+                            <td>@item.DateBirth.ToString("yyyy-MM-dd") </td>
                             <td>
                                 <div class="button-container">
-                                    <button class="btn btn-primary" @onclick="async () => ShowDeleteConfirmation(item.IdEmpleado)">Eliminar</button>
-                                     | 
-                                    <button class="btn btn-success">Modificar</button>
+                                    @if (@userModel.DeleteUser)
+                                    {
+                                        <button class="btn btn-danger" @onclick="async () => ShowDeleteConfirmation(item.Id)">Eliminar</button>
+                                    } |
+                                    @if (@userModel.ModifyUser)
+                                    {
+                                        <button class="btn btn-primary" @onclick="async () => ShowEditModal(item)">Modificar</button>
+                                    }
                                 </div>
                             </td>
                         </tr>
@@ -50,7 +64,7 @@
                 </tbody>
             </table>
         </div>
-        if (EmployeeList != null)
+        @if (EmployeeList != null)
         {
             <div class="button-container">
                 <button class="btn btn-primary" @onclick="OnButtonBeforeClickAsync">Atras</button>
@@ -68,7 +82,42 @@ else
     <p>Por favor, inicia sesión para continuar.</p>
 }
 
-#<!-- #region Delete Section -->
+
+<!-- Modal para agregar empleado -->
+@if (isAddEmployeeModalVisible)
+{
+    <div class="modal show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Agregar Nuevo Empleado</h5>
+                    <button type="button" class="btn-close" @onclick="CloseAddEmployeeModal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="@newEmployee" OnValidSubmit="AddEmployeeAsync">
+                        <div class="mb-3">
+                            <label for="Nombre" class="form-label">Nombre</label>
+                            <InputText id="Nombre" class="form-control" @bind-Value="newEmployee.Nombre" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="Rfc" class="form-label">RFC</label>
+                            <InputText id="Rfc" class="form-control" @bind-Value="newEmployee.Rfc" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="FechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+                            <InputDate id="FechaNacimiento" class="form-control" @bind-Value="newEmployee.FechaNacimiento" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Agregar</button>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<!-- #endregion -->
+
+
+<!-- #region Delete Section -->
 @if (ShowConfirmDialog)
 {
     <div class="modal-overlay">
@@ -83,4 +132,44 @@ else
 
 <!-- #endregion -->
 
+<!-- #region Modification  -->
+@if (ShowEditDialog)
+{
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <h3>Modificar Empleado</h3>
+            <div>
+                <label>Nombre:</label>
+                <input @bind="SelectedEmployee.Name" class="form-control" />
+            </div>
+            <div>
+                <label>RFC:</label>
+                <input @bind="SelectedEmployee.Rfc" class="form-control" />
+            </div>
+            <div>
+                <label>Fecha de Nacimiento:</label>
+                <input type="date" @bind="SelectedEmployee.DateBirth" class="form-control" />
+            </div>
+            <button class="btn btn-success" @onclick="SaveChangesAsync">Guardar</button>
+            <button class="btn btn-secondary" @onclick="CloseEditModal">Cancelar</button>
+        </div>
+    </div>
+}
 
+
+
+@if (mostrarModal)
+{
+    <div class="modal-overlay">
+        <div class="modal-content">
+            <h4>Subir Archivo</h4>
+            <InputFile OnChange="HandleFileSelected" />
+            <div class="modal-actions">
+                <button @onclick="CerrarModal" class="btn btn-secondary">Cancelar</button>
+                <button @onclick="OpenModalToUploadFile" class="btn btn-primary">Subir</button>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- #endregion -->

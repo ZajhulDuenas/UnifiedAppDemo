@@ -5,15 +5,17 @@ namespace Models.DTOs
     public class EmployeeRequestDto
     {
         [JsonProperty("idEmpleado")]
-        public int IdEmpleado;
+        public int Id;
 
         [JsonProperty("nombre")]
-        public string Nombre;
+        public string Name;
 
         [JsonProperty("rfc")]
         public string Rfc;
 
         [JsonProperty("fechaNacimiento")]
-        public string FechaNacimiento;
+        public DateTime DateBirth;
     }
 }
+
+
