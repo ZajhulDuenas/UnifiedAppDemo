@@ -7,7 +7,6 @@ using Models.DTOs;
 using System.ComponentModel.DataAnnotations;
 using WepApp.Models;
 using WepApp.Services;
-using static WepApp.Pages.Employeers;
 
 namespace WepApp.Pages
 {
@@ -21,14 +20,11 @@ namespace WepApp.Pages
         [Inject] private IEmployeersClient employeersClient { get; set; } = default!;
         [Inject] public IConfiguration configuration { get; set; } = default!;
 
+        private bool IsLoading { get; set; } = false;
         private bool isAuthenticated { get; set; } = false;
-
         private int IndexPagination { get; set; } = 1;
-
         private string message { get; set; } = "";
-
         private UserModel userModel { get; set; } = new UserModel();
-
         private List<EmployeeRequestDto> EmployeeList { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
@@ -284,32 +280,43 @@ namespace WepApp.Pages
 
             if (res && userModel.ExportList)
             {
+
+                IsLoading = true; // Muestra el modal
                 string token = "";
 
-                // Usa AuthService para recuperar el token
-                token = await AuthService.GetToken();
-
-                employeersClient.baseEndPoint = configuration["TokenServiceSettings:UrlEmployeers"];
-                employeersClient.ClientToken = new ClientToken() { Token = token };
-
-                var response = await employeersClient.ExportData().ConfigureAwait(false);
-
-                if (response.StatusCode == 200)
+                try
                 {
-                    byte[] contentStream = response.Payload;
+                    // Usa AuthService para recuperar el token
+                    token = await AuthService.GetToken();
 
-                    var base64Content = Convert.ToBase64String(contentStream);
+                    employeersClient.baseEndPoint = configuration["TokenServiceSettings:UrlEmployeers"];
+                    employeersClient.ClientToken = new ClientToken() { Token = token };
 
-                    var fileName = "archivo.xlsx"; // Nombre del archivo para la descarga
-                    var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"; // Tipo de contenido
-                    
-                    // Invocar el método de JavaScript para crear el archivo descargable
-                    await JS.InvokeVoidAsync("downloadFileFromBlazor", fileName, contentType, base64Content);
+                    var response = await employeersClient.ExportData().ConfigureAwait(false);
 
+                    if (response.StatusCode == 200)
+                    {
+                        byte[] contentStream = response.Payload;
+
+                        var base64Content = Convert.ToBase64String(contentStream);
+
+                        var fileName = "archivo.xlsx"; // Nombre del archivo para la descarga
+                        var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"; // Tipo de contenido
+
+                        // Invocar el método de JavaScript para crear el archivo descargable
+                        await JS.InvokeVoidAsync("downloadFileFromBlazor", fileName, contentType, base64Content);
+
+
+                    }
+
+                }
+                finally
+                {
+                    IsLoading = false; // Oculta el modal después de la descarga
                 }
 
                 Console.WriteLine("Error al descargar el archivo.");
-
+                
             }
 
             Console.WriteLine("Permisos insuficientes");
@@ -320,17 +327,17 @@ namespace WepApp.Pages
 
         #region Import
 
-        private bool mostrarModal = false;
+        private bool ShowUploadModal = false;
         private IBrowserFile archivoSeleccionado;
 
         private void ModalImportList()
         {
-            mostrarModal = true;
+            ShowUploadModal = true;
         }
 
         private void CerrarModal()
         {
-            mostrarModal = false;
+            ShowUploadModal = false;
         }
 
         private void HandleFileSelected(InputFileChangeEventArgs e)
@@ -351,7 +358,7 @@ namespace WepApp.Pages
                 Console.WriteLine($"Archivo {archivoSeleccionado.Name} cargado correctamente.");
 
                 // Cerrar el modal
-                mostrarModal = false;
+                ShowUploadModal = false;
             }
         }
 
