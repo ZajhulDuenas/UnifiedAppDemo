@@ -4,6 +4,7 @@ using Models;
 using Models.DTOs;
 using common;
 using ClosedXML.Excel;
+using EFCore.BulkExtensions;
 
 namespace UserStories.login
 {
@@ -263,9 +264,21 @@ namespace UserStories.login
                // data.Add(rowData);
             }
 
-            //var EmplRepository = unitOfWork.Repository<TblEmpleado>();
+            var EmplRepository = unitOfWork.Repository<TblEmpleado>();
+            var entitiesToDelete = await EmplRepository.SearchAllAsync().ConfigureAwait(false);
 
-            await unitOfWork.BulkInsertAsync(employeList);
+            var bulkConfig = new BulkConfig
+            {
+                // Configuración opcional para mejorar el rendimiento
+                PreserveInsertOrder = true,
+                SetOutputIdentity = false
+            };
+            await unitOfWork.BulkDeleteAsync<TblEmpleado>(entitiesToDelete , 
+                                                          bulkConfig: bulkConfig
+                                            
+                ).ConfigureAwait(false);
+            
+            await unitOfWork.BulkInsertAsync(employeList).ConfigureAwait(false);
 
             result.Success = true;
             result.Message = "Done";

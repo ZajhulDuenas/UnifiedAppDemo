@@ -112,7 +112,7 @@ namespace WebApi.Controllers
 
         [HttpPost]
         [Route("ImportEmployeeList")]
-       // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "ImportPolicy")] // aply custom Politic
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "ImportPolicy")] // aply custom Politic
         public async Task<IActionResult> Import(IFormFile file)
         {
 

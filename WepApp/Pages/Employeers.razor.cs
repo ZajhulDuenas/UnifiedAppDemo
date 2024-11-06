@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using Models.ClientApi;
 using Models.DTOs;
+using Newtonsoft.Json.Linq;
+using RTools_NTS.Util;
 using System.ComponentModel.DataAnnotations;
 using WepApp.Models;
 using WepApp.Services;
@@ -282,6 +284,7 @@ namespace WepApp.Pages
             {
 
                 IsLoading = true; // Muestra el modal
+                StateHasChanged(); // Forzar renderización del componente
                 string token = "";
 
                 try
@@ -306,13 +309,13 @@ namespace WepApp.Pages
                         // Invocar el método de JavaScript para crear el archivo descargable
                         await JS.InvokeVoidAsync("downloadFileFromBlazor", fileName, contentType, base64Content);
 
-
                     }
 
                 }
                 finally
                 {
                     IsLoading = false; // Oculta el modal después de la descarga
+                    StateHasChanged(); // Forzar renderización del componente
                 }
 
                 Console.WriteLine("Error al descargar el archivo.");
@@ -327,8 +330,9 @@ namespace WepApp.Pages
 
         #region Import
 
+        private bool isUploading = false;
         private bool ShowUploadModal = false;
-        private IBrowserFile archivoSeleccionado;
+        private IBrowserFile selectedFile ;
 
         private void ModalImportList()
         {
@@ -343,19 +347,38 @@ namespace WepApp.Pages
         private void HandleFileSelected(InputFileChangeEventArgs e)
         {
             // Obtener el archivo seleccionado
-            archivoSeleccionado = e.File;
+            selectedFile  = e.File;
         }
 
         private async Task OpenModalToUploadFile()
         {
-            if (archivoSeleccionado != null)
+            if (selectedFile != null)
             {
-                // Leer el archivo en un array de bytes
-                var buffer = new byte[archivoSeleccionado.Size];
-                await archivoSeleccionado.OpenReadStream().ReadAsync(buffer);
+                isUploading = true;
 
+                var content = new MultipartFormDataContent();
+
+                var fileContent = new StreamContent(selectedFile.OpenReadStream());
+
+                fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(selectedFile.ContentType);
+
+                content.Add(fileContent, "file", selectedFile.Name);
+
+                string token = "";
+                // Usa AuthService para recuperar el token
+                token = await AuthService.GetToken();
+
+                employeersClient.baseEndPoint = configuration["TokenServiceSettings:UrlEmployeers"];
+                employeersClient.ClientToken = new ClientToken() { Token = token };
+
+                var response = await employeersClient.ImportData(content).ConfigureAwait(false);
+
+                EmployeeList = new List<EmployeeRequestDto>();
+
+                IndexPagination = 1;
+                await refreshEmployeTableAsync();
                 // Lógica para procesar o subir el archivo (por ejemplo, enviar a una API)
-                Console.WriteLine($"Archivo {archivoSeleccionado.Name} cargado correctamente.");
+                Console.WriteLine($"Archivo {selectedFile .Name} cargado correctamente.");
 
                 // Cerrar el modal
                 ShowUploadModal = false;

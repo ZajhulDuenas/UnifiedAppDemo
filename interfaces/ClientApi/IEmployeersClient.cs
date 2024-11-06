@@ -13,6 +13,7 @@ namespace Front.Infrastructure.ClientApi
         Task<Response<EmployeeRequestDto>> DeleteEmployee(int id);
         Task<Response<byte[]>> ExportData();
         Task<Response<List<EmployeeRequestDto>>> GetEmployeersByIndex(int index = 1, int pageSize = 10);
+        Task<object> ImportData(MultipartFormDataContent content);
         Task<Response<EmployeeRequestDto>> ModifyEmployee(EmployeeRequestDto request);
         Task<Response<ClientToken>> OnGetToken();
     }

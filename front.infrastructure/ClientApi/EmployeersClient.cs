@@ -328,7 +328,52 @@ namespace Front.Infrastructure.ClientApi
 
         }
 
+        public async Task<object> ImportData(MultipartFormDataContent content)
+        {
+            Models.Response<object> result = new Models.Response<object>();
 
+            try
+            {
+
+                using (var client = GetClient())
+                {
+                    if (ClientToken != null) client.DefaultRequestHeaders.Add("x-token", ClientToken.Token);
+                    var endpoint = new Uri($"{baseEndPoint}{IMPORT}");
+
+                    var responseApi = await client.PostAsync(endpoint, content).ConfigureAwait(false);
+
+                    if (!responseApi.IsSuccessStatusCode)
+                    {
+                        var log = new
+                        {
+
+                            Response = responseApi.ToString(),
+                           // Content = responseContent,
+                            EndPoint = baseEndPoint
+                        }.SerializeJson();
+
+                        // Logger.LogError("Error de API: {Data}", log);
+
+                        return result.AddError($"Ocurrió un error al consumir: {endpoint}");
+                    }
+
+                    // response.Payload = result.Payload;
+
+                    result.StatusCode = 200;
+                    result.Payload = null;
+                    return result;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine($"Exception {ex.Message}");
+                return null;
+            }
+
+        }
 
     }
 }
