@@ -64,7 +64,7 @@
                 </tbody>
             </table>
         </div>
-        @if (EmployeeList != null)
+        @if (EmployeeList != null || EmployeeList.Count() > 0 )
         {
             <div class="button-container">
                 <button class="btn btn-primary" @onclick="OnButtonBeforeClickAsync">Atras</button>
