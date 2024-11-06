@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<FlyoutPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:MovilApp.Screens"
+            
+           >
+
+    <!-- Flyout page (menú lateral) -->
+    <FlyoutPage.Flyout>
+        <ContentPage Title="Menú">
+            <StackLayout>
+                <Button Text="Home" Command="{Binding NavigateToHomeCommand}" />
+                <Button Text="Settings" Command="{Binding NavigateToSettingsCommand}" />
+               
+                <!-- Contenido del menú -->
+                <Label Text="Opción 1" />
+                <Label Text="Opción 2" />
+            </StackLayout>
+        </ContentPage>
+    </FlyoutPage.Flyout>
+
+    <!-- Detail page (contenido principal) -->
+    <FlyoutPage.Detail>
+        <NavigationPage>
+
+            <x:Arguments>
+                <local:Welcome />
+            </x:Arguments>
+<!-- 
+            <x:Arguments>
+                <ContentPage Title="Página Principal">
+                    <StackLayout>
+                        <Label Text="Contenido principal aquí" />
+                    </StackLayout>
+                </ContentPage>
+            </x:Arguments>
+
+                -->
+        </NavigationPage>
+    </FlyoutPage.Detail>
+
+</FlyoutPage>

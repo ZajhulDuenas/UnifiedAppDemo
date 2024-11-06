@@ -1,4 +1,4 @@
-﻿namespace MovilApp
+﻿namespace MauiAppDemo.Pages
 {
     public partial class AppShell : Shell
     {

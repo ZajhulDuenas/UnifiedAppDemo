@@ -1,10 +1,10 @@
-﻿namespace MovilApp
+﻿namespace MovilApp.Screens
 {
-    public partial class MainPage : ContentPage
+    public partial class Welcome : ContentPage
     {
         int count = 0;
 
-        public MainPage()
+        public Welcome()
         {
             InitializeComponent();
         }

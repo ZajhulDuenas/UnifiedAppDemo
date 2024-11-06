@@ -119,7 +119,6 @@ namespace WebApi.Controllers
             if (file == null || file.Length == 0)
                 return BadRequest("Parametro de entrada nulo");
 
-
             // Ejemplo de uso
             var allowedExtensions = new[] { ".xlsx", ".xls" };
             if (!IsValidFileExtension(file, allowedExtensions))

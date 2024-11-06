@@ -3,7 +3,6 @@ using Models.ClientApi;
 using Models.ClientApi.Base;
 using common;
 using System.Net.Http.Json;
-using System.Net;
 
 
 namespace Front.Infrastructure.ClientApi
