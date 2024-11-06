@@ -276,11 +276,8 @@ namespace WepApp.Pages
 
         #endregion
 
-        #region Import & Export
 
-        private bool mostrarModal = false;
-        private IBrowserFile archivoSeleccionado;
-
+        #region Export
         private async Task ExportList()
         {
             var res = await CheckStatusUsr();
@@ -299,13 +296,15 @@ namespace WepApp.Pages
 
                 if (response.StatusCode == 200)
                 {
+                    byte[] contentStream = response.Payload;
 
-                    // Leer el archivo como bytes
-                    var fileBytes = response.Payload;
+                    var base64Content = Convert.ToBase64String(contentStream);
 
+                    var fileName = "archivo.xlsx"; // Nombre del archivo para la descarga
+                    var contentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"; // Tipo de contenido
+                    
                     // Invocar el método de JavaScript para crear el archivo descargable
-                    await JS.InvokeVoidAsync("BlazorDownloadFile", "archivo.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileBytes);
-
+                    await JS.InvokeVoidAsync("downloadFileFromBlazor", fileName, contentType, base64Content);
 
                 }
 
@@ -317,7 +316,14 @@ namespace WepApp.Pages
 
         }
 
-        private void AbrirModal()
+        #endregion
+
+        #region Import
+
+        private bool mostrarModal = false;
+        private IBrowserFile archivoSeleccionado;
+
+        private void ModalImportList()
         {
             mostrarModal = true;
         }

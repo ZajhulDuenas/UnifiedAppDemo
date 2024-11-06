@@ -313,7 +313,7 @@ namespace Front.Infrastructure.ClientApi
                     // response.Payload = result.Payload;
 
                     result.StatusCode = 200;
-                    result.Payload = await responseApi.Content.ReadAsByteArrayAsync();
+                    result.Payload = await responseApi.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
                     return result;
 
                 }

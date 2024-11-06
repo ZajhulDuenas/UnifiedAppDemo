@@ -1,7 +1,5 @@
 ﻿using Front.Infrastructure.ClientApi;
 using Microsoft.AspNetCore.Components;
-using Newtonsoft.Json.Linq;
-using System.Security.Claims;
 using WepApp.Models;
 using WepApp.Services;
 
