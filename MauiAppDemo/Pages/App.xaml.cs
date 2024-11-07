@@ -1,20 +1,32 @@
 ﻿using MauiAppDemo.common;
+using MauiAppDemo.ViewModels;
 using System.Text.Json;
 
 namespace MauiAppDemo.Pages
 {
     public partial class App : Application
     {
-        public static AppSettings Settings { get; private set; }
+        public static AppSettings Settings { get; private set; } = new AppSettings();
 
         public App()
         {
             InitializeComponent();
+           
+        }
+
+        public App(LoginViewModel loginViewModel)
+        {
+          
             // Cargar configuraciones
             LoadAppSettings();
 
 
-            MainPage = new LoginPage();
+            // MainPage = new LoginPage();
+
+            MainPage = new NavigationPage(new LoginPage
+            {
+                BindingContext = loginViewModel
+            });
         }
 
         private void LoadAppSettings()

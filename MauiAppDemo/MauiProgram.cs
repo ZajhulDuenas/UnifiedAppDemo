@@ -1,4 +1,5 @@
 ﻿using MauiAppDemo.Pages;
+using MauiAppDemo.ViewModels;
 using Microsoft.Extensions.Logging;
 
 namespace MauiAppDemo
@@ -20,14 +21,17 @@ namespace MauiAppDemo
             // Add services to the container.
             builder.Services.RegisterServices(builder.Configuration);
 
-            //  builder.Services.AddSingleton(App.Settings);
+            // Registrar el ViewModel
+            builder.Services.AddTransient<LoginViewModel>();
 
-
+            builder.Services.AddSingleton(App.Settings);
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
+
+
         }
     }
 }
