@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using infrastructure.DataBase;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Models.DataBase;
 
 namespace infrastructure.DataBase;
 

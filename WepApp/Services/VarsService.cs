@@ -9,7 +9,12 @@ namespace WepApp.Services
     {
         private readonly IJSRuntime _js;
 
-        public VarsService(IJSRuntime js, HttpClient http)
+        public VarsService()
+        {
+         
+        }
+
+        public VarsService(IJSRuntime js)
         {
             _js = js;
         }
@@ -18,18 +23,6 @@ namespace WepApp.Services
         {
             var value = await _js.InvokeAsync<string>("localStorage.getItem", tag);
             return !string.IsNullOrEmpty(value);
-        }
-
-        public async Task<string> getData(string tag)
-        {
-            if (await Exist(tag))
-            {
-                var token = await _js.InvokeAsync<string>("localStorage.getItem", tag);
-
-                return token;
-            }
-            return "";
-
         }
 
         public async Task<T> ExtractObject<T>(string tag)
@@ -58,6 +51,21 @@ namespace WepApp.Services
             {
                 var jsonData = JsonSerializer.Serialize(data);
                 await _js.InvokeVoidAsync("localStorage.setItem", tag, jsonData);
+                return true;
+            }
+            catch (Exception)
+            {
+                // Opcionalmente, puedes hacer un log del error aquí
+                return false;
+            }
+        }
+
+        public async Task<bool> RemoveObject(string tag)
+        {
+            try
+            {
+                await _js.InvokeVoidAsync("localStorage.removeItem", tag);
+
                 return true;
             }
             catch (Exception)

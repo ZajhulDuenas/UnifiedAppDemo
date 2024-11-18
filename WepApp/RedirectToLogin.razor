@@ -4,12 +4,16 @@
 @code {
     protected override async Task OnInitializedAsync()
     {
-        var isAuthenticated = await AuthService.IsAuthenticated();
+        var isAuthenticated = AuthService.IsAuthenticated;
         if (!isAuthenticated)
 
         {
             // Redirigir al login si no está autenticado
             Navigation.NavigateTo("/login", forceLoad: true);
+        }
+        else
+        {
+                
         }
     }
 }

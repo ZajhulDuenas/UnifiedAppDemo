@@ -1,25 +1,38 @@
-﻿using Microsoft.JSInterop;
+﻿using Microsoft.AspNetCore.Components;
+using WepApp.Services;
 public class AuthService
 {
-    private readonly IJSRuntime _js;
-    private readonly HttpClient _http;
+    [Inject] protected VarsService _VarsService { get; set; }
 
-    public AuthService(IJSRuntime js, HttpClient http)
+    private string tagtoken = "authToken";
+    public bool IsAuthenticated { get; private set; }
+
+    public event Action OnAuthStateChanged;
+
+    public AuthService(VarsService VarsService) {
+
+        _VarsService = VarsService;
+    }
+    public async Task LoginAsync(string token)
     {
-        _js = js;
-        _http = http;
+        IsAuthenticated = true;
+        await _VarsService.SetObject<string>(tagtoken, token);
+        NotifyAuthStateChanged();
     }
 
+    /*
     public async Task<bool> IsAuthenticated()
     {
         var token = await _js.InvokeAsync<string>("localStorage.getItem", "authToken");
         return !string.IsNullOrEmpty(token);
     }
+    */
 
     public async Task<string> GetToken()
     {
-        if (await IsAuthenticated()) {
-            var token = await _js.InvokeAsync<string>("localStorage.getItem", "authToken");
+        if (IsAuthenticated) {
+
+            var token = await _VarsService.ExtractObject<string>(tagtoken);
 
             return token;
         }
@@ -27,14 +40,14 @@ public class AuthService
         
     }
 
-    public async Task SetToken(string token)
-    {
-        await _js.InvokeVoidAsync("localStorage.setItem", "authToken", token);
-    }
-
     public async Task Logout()
     {
-        await _js.InvokeVoidAsync("localStorage.removeItem", "authToken");
-        // Redirige al usuario a la página de login
+        IsAuthenticated = false;
+        NotifyAuthStateChanged();
+        await _VarsService.RemoveObject(tagtoken);
+       
     }
+
+    private void NotifyAuthStateChanged() => OnAuthStateChanged?.Invoke();
+
 }

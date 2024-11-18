@@ -1,5 +1,4 @@
-﻿using infrastructure.DataBase;
-using interfaces.DataBase;
+﻿using interfaces.DataBase;
 using Models;
 using Models.DTOs;
 using common;
@@ -7,6 +6,7 @@ using infrastructure.jwt;
 using Microsoft.Extensions.Configuration;
 using Interfaces.UserStory;
 using Models.ClientApi;
+using Models.DataBase;
 
 
 namespace UserStories.login

@@ -7,7 +7,7 @@ namespace MauiAppDemo.Pages
 {
     public partial class LoginPage : ContentPage
     {
-        private readonly ITokenServiceClient _tokenServiceClient;
+        private readonly IAuthServiceClient _tokenServiceClient;
 
         public LoginPage()
         {

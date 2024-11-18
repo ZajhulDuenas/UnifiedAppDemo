@@ -4,10 +4,8 @@ using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.JSInterop;
 using Models.ClientApi;
 using Models.DTOs;
-using Newtonsoft.Json.Linq;
-using RTools_NTS.Util;
 using System.ComponentModel.DataAnnotations;
-using WepApp.Models;
+using WepApp.Models.Layuout;
 using WepApp.Services;
 
 namespace WepApp.Pages
@@ -19,6 +17,8 @@ namespace WepApp.Pages
         [Inject] protected AuthService AuthService { get; set; }
         [Inject] protected VarsService VarsService { get; set; }
 
+        [Inject] protected NavigationManager Navigation { get; set; }
+
         [Inject] private IEmployeersClient employeersClient { get; set; } = default!;
         [Inject] public IConfiguration configuration { get; set; } = default!;
 
@@ -26,7 +26,7 @@ namespace WepApp.Pages
         private bool isAuthenticated { get; set; } = false;
         private int IndexPagination { get; set; } = 1;
         private string message { get; set; } = "";
-        private UserModel userModel { get; set; } = new UserModel();
+        private UserLayout userModel { get; set; } = new UserLayout();
         private List<EmployeeRequestDto> EmployeeList { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
@@ -61,12 +61,6 @@ namespace WepApp.Pages
             {
                 string token = "";
 
-                // Usa AuthService para guardar el token
-                token = await AuthService.GetToken();
-
-                employeersClient.baseEndPoint = configuration["TokenServiceSettings:UrlEmployeers"];
-                employeersClient.ClientToken = new ClientToken() { Token = token };
-
                 var response = await employeersClient.GetEmployeersByIndex(IndexPagination, 10).ConfigureAwait(false);
 
                 EmployeeList = response.Payload;
@@ -85,17 +79,24 @@ namespace WepApp.Pages
                 return false;
             }
 
-            isAuthenticated = await AuthService.IsAuthenticated();
-            //UserModel info = new UserModel();
+            isAuthenticated = AuthService.IsAuthenticated;
+
+
 
             if (!isAuthenticated)
             {
                 message = "Por favor, inicia sesión para continuar.";
+                // Redirigir al login si no está autenticado
+                Navigation.NavigateTo("/login", forceLoad: true);
                 return false;
             }
 
+            // Usa AuthService para guardar el token
+            var token = await AuthService.GetToken();
+            employeersClient.ClientToken = new ClientToken() { Token = token };
+
             message = "";
-            userModel = await VarsService.ExtractObject<UserModel>("UserModel");
+            userModel = await VarsService.ExtractObject<UserLayout>("UserModel");
 
             if (isAuthenticated && userModel != null && !userModel.ReadList)
             {
@@ -122,16 +123,7 @@ namespace WepApp.Pages
 
             if (res)
             {
-
-                string token = "";
-
-                // Usa AuthService para guardar el token
-                token = await AuthService.GetToken();
-
-                employeersClient.baseEndPoint = configuration["TokenServiceSettings:UrlEmployeers"];
-                employeersClient.ClientToken = new ClientToken() { Token = token };
-
-                var response = await employeersClient.DeleteEmployee(id).ConfigureAwait(false);
+                 var response = await employeersClient.DeleteEmployee(id).ConfigureAwait(false);
 
                 // EmployeeList = response.Payload;
             }
@@ -144,17 +136,7 @@ namespace WepApp.Pages
 
             if (res && EmployeeIdToDelete.HasValue)
             {
-                // Lógica para eliminar el empleado
-
-                string token = "";
-
-                // Usa AuthService para recuperar el token
-                token = await AuthService.GetToken();
-
-                employeersClient.baseEndPoint = configuration["TokenServiceSettings:UrlEmployeers"];
-                employeersClient.ClientToken = new ClientToken() { Token = token };
-
-                var response = await employeersClient.DeleteEmployee(EmployeeIdToDelete.Value).ConfigureAwait(false);
+               var response = await employeersClient.DeleteEmployee(EmployeeIdToDelete.Value).ConfigureAwait(false);
 
                 // EmployeeList = response.Payload;
 
@@ -274,7 +256,6 @@ namespace WepApp.Pages
 
         #endregion
 
-
         #region Export
         private async Task ExportList()
         {
@@ -289,12 +270,6 @@ namespace WepApp.Pages
 
                 try
                 {
-                    // Usa AuthService para recuperar el token
-                    token = await AuthService.GetToken();
-
-                    employeersClient.baseEndPoint = configuration["TokenServiceSettings:UrlEmployeers"];
-                    employeersClient.ClientToken = new ClientToken() { Token = token };
-
                     var response = await employeersClient.ExportData().ConfigureAwait(false);
 
                     if (response.StatusCode == 200)
@@ -363,13 +338,6 @@ namespace WepApp.Pages
                 fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(selectedFile.ContentType);
 
                 content.Add(fileContent, "file", selectedFile.Name);
-
-                string token = "";
-                // Usa AuthService para recuperar el token
-                token = await AuthService.GetToken();
-
-                employeersClient.baseEndPoint = configuration["TokenServiceSettings:UrlEmployeers"];
-                employeersClient.ClientToken = new ClientToken() { Token = token };
 
                 var response = await employeersClient.ImportData(content).ConfigureAwait(false);
 

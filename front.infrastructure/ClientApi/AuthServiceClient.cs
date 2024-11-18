@@ -3,13 +3,17 @@ using Models.ClientApi;
 using Models.ClientApi.Base;
 using common;
 using System.Net.Http.Json;
+using Microsoft.Extensions.Configuration;
 
 
 namespace Front.Infrastructure.ClientApi
 {
-    public class TokenServiceClient : BaseClientApi, ITokenServiceClient
+    public class AuthServiceClient(IConfiguration configuration) : BaseClientApi, IAuthServiceClient
     {
-       
+        private readonly IConfiguration configuration = configuration;
+
+
+
         const string AUTH_TOKEN = "/GetToken";
 
         public string baseEndPoint { get; set; } = string.Empty;
@@ -17,12 +21,11 @@ namespace Front.Infrastructure.ClientApi
         public string password { get; set; } = string.Empty;
         public override ClientToken? ClientToken { get; set; }
 
-        public override async Task<Response<ClientToken>> OnGetToken()
+        public async Task<Response<ClientToken>> OnBasicGetToken(string user, string pass)
         {
             var response = new Response<ClientToken>();
 
-            if (string.IsNullOrEmpty(baseEndPoint))
-                throw new ArgumentException("Parametros de configuración TokenService Api vacios o nulos");
+            baseEndPoint = configuration["UrlsServices:UrlBase"];
 
             try
             {
@@ -34,8 +37,8 @@ namespace Front.Infrastructure.ClientApi
 
                     var request = new
                     {
-                        username = userName,
-                        password = password
+                        username = user,
+                        password = pass
                     };
 
                     using var content = request.SerializeJsonContent();
@@ -74,6 +77,11 @@ namespace Front.Infrastructure.ClientApi
                 Console.WriteLine($"Exception {ex.Message}");
                 return null;
             }
+        }
+
+        public override Task<Response<ClientToken>> OnGetToken()
+        {
+            throw new NotImplementedException();
         }
     }
 }

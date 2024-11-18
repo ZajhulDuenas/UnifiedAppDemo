@@ -1,8 +1,6 @@
-using Front.Infrastructure.Settings;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using System.Runtime;
 using WepApp;
 using WepApp.Services;
 
@@ -22,8 +20,9 @@ builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthenticationStat
 
 // Cargar configuración desde wwwroot/appsettings.json
 builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<VarsService>();
+builder.Services.AddScoped<AuthService>();
+
 // Add services to the container.
 builder.Services.RegisterServices(builder.Configuration);
 

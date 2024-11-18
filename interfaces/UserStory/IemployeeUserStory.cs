@@ -1,6 +1,6 @@
-﻿using infrastructure.DataBase;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Models;
+using Models.DataBase;
 using Models.DTOs;
 
 namespace UserStories.login

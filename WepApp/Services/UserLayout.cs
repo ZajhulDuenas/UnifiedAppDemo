@@ -1,6 +1,6 @@
-﻿namespace WepApp.Models
+﻿namespace WepApp.Models.Layuout
 {
-    public class UserModel
+    public class UserLayout
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;

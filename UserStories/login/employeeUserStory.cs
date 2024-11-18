@@ -1,10 +1,10 @@
-﻿using infrastructure.DataBase;
-using interfaces.DataBase;
+﻿using interfaces.DataBase;
 using Models;
 using Models.DTOs;
 using common;
 using ClosedXML.Excel;
 using EFCore.BulkExtensions;
+using Models.DataBase;
 
 namespace UserStories.login
 {

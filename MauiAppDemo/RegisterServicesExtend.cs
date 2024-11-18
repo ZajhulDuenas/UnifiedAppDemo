@@ -15,7 +15,7 @@ namespace MauiAppDemo
             // Registrar los servicios
             services.AddSingleton<IAuthenticationService, AuthenticationService>();
 
-            services.AddTransient<ITokenServiceClient, TokenServiceClient>();
+            services.AddTransient<IAuthServiceClient, AuthServiceClient>();
             services.AddTransient<IEmployeersClient, EmployeersClient>();
             // services.Configure<TokenServiceSettings>(configuration.GetSection("TokenServiceSettings"));
 

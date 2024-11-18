@@ -1,4 +1,5 @@
 ﻿using common;
+using Microsoft.Extensions.Configuration;
 using Models;
 using Models.ClientApi;
 using Models.ClientApi.Base;
@@ -7,8 +8,10 @@ using System.Net.Http.Json;
 
 namespace Front.Infrastructure.ClientApi
 {
-    public class EmployeersClient : BaseClientApi, IEmployeersClient
+    public class EmployeersClient(IConfiguration configuration) : BaseClientApi, IEmployeersClient
     {
+        private readonly IConfiguration configuration = configuration;
+
         const string EMPLOYEERS = "/GetEmployees";
         const string DELETE = "/DeleteEmployee";
         const string MODIFY = "/ModifyEmployee";
@@ -21,18 +24,12 @@ namespace Front.Infrastructure.ClientApi
 
         public override ClientToken? ClientToken { get; set; }
 
-        public override Task<Models.Response<ClientToken>> OnGetToken()
-        {
-            throw new NotImplementedException();
-        }
 
         public async Task<Models.Response<List<EmployeeRequestDto>>> GetEmployeersByIndex(int index = 1, int pageSize = 10)
         {
+            CheckParameters();
 
             var response = new Response<List<EmployeeRequestDto>>();
-
-            if (string.IsNullOrEmpty(baseEndPoint))
-                throw new ArgumentException("Parametros de configuración EmployeersClient Api vacios o nulos");
 
             try
             {
@@ -91,11 +88,9 @@ namespace Front.Infrastructure.ClientApi
 
         public async Task<Models.Response<EmployeeRequestDto>> DeleteEmployee(int id)
         {
+            CheckParameters();
 
             var response = new Response<EmployeeRequestDto>();
-
-            if (string.IsNullOrEmpty(baseEndPoint))
-                throw new ArgumentException("Parametros de configuración EmployeersClient Api vacios o nulos");
 
             try
             {
@@ -153,11 +148,9 @@ namespace Front.Infrastructure.ClientApi
 
         public async Task<Models.Response<EmployeeRequestDto>> ModifyEmployee(EmployeeRequestDto request)
         {
+            CheckParameters();
 
             var response = new Response<EmployeeRequestDto>();
-
-            if (string.IsNullOrEmpty(baseEndPoint))
-                throw new ArgumentException("Parametros de configuración EmployeersClient Api vacios o nulos");
 
             try
             {
@@ -215,14 +208,11 @@ namespace Front.Infrastructure.ClientApi
 
         }
 
-
         public async Task<Models.Response<EmployeeRequestDto>> AddEmployee(EmployeeRequestDto request)
         {
+            CheckParameters();
 
             var response = new Models.Response<EmployeeRequestDto>();
-
-            if (string.IsNullOrEmpty(baseEndPoint))
-                throw new ArgumentException("Parametros de configuración EmployeersClient Api vacios o nulos");
 
             try
             {
@@ -282,6 +272,8 @@ namespace Front.Infrastructure.ClientApi
 
         public async Task<Models.Response<byte[]>> ExportData()
         {
+            CheckParameters();
+
             Models.Response<byte[]> result = new Models.Response<byte[]>();
 
             try
@@ -330,6 +322,8 @@ namespace Front.Infrastructure.ClientApi
 
         public async Task<object> ImportData(MultipartFormDataContent content)
         {
+            CheckParameters();
+
             Models.Response<object> result = new Models.Response<object>();
 
             try
@@ -375,5 +369,23 @@ namespace Front.Infrastructure.ClientApi
 
         }
 
+        public override Task<Response<ClientToken>> OnGetToken()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CheckParameters() 
+        {
+
+            baseEndPoint = configuration["UrlsServices:UrlEmployeers"];
+
+            if (ClientToken == null)
+                throw new ArgumentException("Api Token vacios o nulos");
+
+
+            if (string.IsNullOrEmpty(baseEndPoint))
+                throw new ArgumentException("Parametros de configuración EmployeersClient Api vacios o nulos");
+
+        }
     }
 }

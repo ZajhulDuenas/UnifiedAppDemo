@@ -3,7 +3,7 @@ using Models.ClientApi;
 
 namespace Front.Infrastructure.ClientApi
 {
-    public interface ITokenServiceClient
+    public interface IAuthServiceClient
     {
         ClientToken? ClientToken { get; set; }
 
@@ -11,6 +11,6 @@ namespace Front.Infrastructure.ClientApi
         string password { get; set; }
         string userName { get; set; }
 
-        Task<Response<ClientToken>> OnGetToken();
+        Task<Response<ClientToken>> OnBasicGetToken(string user, string pass);
     }
 }

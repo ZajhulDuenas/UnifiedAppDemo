@@ -1,16 +1,15 @@
 ﻿using Front.Infrastructure.ClientApi;
 using Microsoft.AspNetCore.Components;
-using WepApp.Models;
+using System.ComponentModel.DataAnnotations;
+using WepApp.Models.Layuout;
 using WepApp.Services;
 
 namespace WepApp.Pages
 {
     public partial class LoginBase : ComponentBase
     {
-        [Inject]
-        private ITokenServiceClient tokenServiceClient { get; set; } = default!;
-        [Inject]
-        public IConfiguration configuration { get; set; } = default!;
+        [Inject] private IAuthServiceClient tokenServiceClient { get; set; } = default!;
+        [Inject] public IConfiguration configuration { get; set; } = default!;
 
         [Inject] protected HttpClient Http { get; set; }
         [Inject] protected NavigationManager Navigation { get; set; }
@@ -18,7 +17,7 @@ namespace WepApp.Pages
         [Inject] protected AuthService AuthService { get; set; }
         [Inject] protected VarsService VarsService { get; set; }
 
-        protected LoginModel LoginModel = new LoginModel();
+        protected LoginLayout LoginLayout = new LoginLayout();
 
        // protected string Username { get; set; }
        // protected string Password { get; set; }
@@ -29,21 +28,21 @@ namespace WepApp.Pages
             try
             {
 
-                tokenServiceClient.baseEndPoint = configuration["TokenServiceSettings:UrlBase"];
-                tokenServiceClient.userName = LoginModel.Username;
-                tokenServiceClient.password = LoginModel.Password;
+                //tokenServiceClient.baseEndPoint = configuration["UrlsServices:UrlBase"];
+               // tokenServiceClient.userName = LoginModel.Username;
+               // tokenServiceClient.password = LoginModel.Password;
 
-                var response = await tokenServiceClient.OnGetToken();
+                var response = await tokenServiceClient.OnBasicGetToken(LoginLayout.Username, LoginLayout.Password);
 
                 if (response.Success)
                 {
-                    // Asumimos que recibimos un token en la respuesta
+                    
                     var token = response.Payload.Token;
 
                     // extraer ckaims
                     var claims_list = JwtTokenService.GetClaimsFromJwt(token);
 
-                    var LocalUser = new UserModel();
+                    var LocalUser = new UserLayout();
 
                     LocalUser.Id = int.Parse(claims_list.FirstOrDefault(c => c.Type == "userId").Value);
                     LocalUser.Name = claims_list.FirstOrDefault(c => c.Type == "realName").Value;
@@ -55,10 +54,10 @@ namespace WepApp.Pages
                     LocalUser.ExportList = claims_list.FirstOrDefault(c => c.Type == "Exportar").Value == "True";
 
                     // Usa AuthService para guardar el token
-                    await AuthService.SetToken(token);
+                    await AuthService.LoginAsync(token);
 
                     // guarda info de usuario
-                    await VarsService.SetObject<UserModel>("UserModel", LocalUser);
+                    await VarsService.SetObject<UserLayout>("UserModel", LocalUser);
 
                     // Redirige al usuario a la página principal
                     Navigation.NavigateTo("/");
@@ -73,6 +72,14 @@ namespace WepApp.Pages
                 Message = $"Error en la autenticación: {ex.Message}";
             }
         }
+    }
+
+    public class LoginLayout
+    {
+        [Required(ErrorMessage = "Usuario Requerido")]
+        public string Username { get; set; }
+        [Required(ErrorMessage = "Password Requerido")]
+        public string Password { get; set; }
     }
 
 }

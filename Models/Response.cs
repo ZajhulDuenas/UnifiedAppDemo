@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Models
+﻿namespace Models
 {
-    public class Response<T> : Response
+   public class Response<T> : Response
    where T : class
     {
         public T? Payload { get; set; }

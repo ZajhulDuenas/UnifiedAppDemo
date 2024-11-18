@@ -18,13 +18,13 @@ namespace MauiAppDemo.ViewModels
         [ObservableProperty]
         private string _message;
 
-        public readonly ITokenServiceClient _tokenServiceClient;
+        public readonly IAuthServiceClient _tokenServiceClient;
 
         public ICommand LoginCommand { get; }
 
         public readonly IAuthenticationService _authService;
 
-        public LoginViewModel(ITokenServiceClient tokenServiceClient, IAuthenticationService authService)
+        public LoginViewModel(IAuthServiceClient tokenServiceClient, IAuthenticationService authService)
         {
             _authService = authService;
             _tokenServiceClient = tokenServiceClient;
@@ -48,7 +48,7 @@ namespace MauiAppDemo.ViewModels
             }
 
             
-            var baseUrl = 
+           // var baseUrl = 
             
             
             var result = await _authService.BasicAuthenticateAsync(Username, Password);

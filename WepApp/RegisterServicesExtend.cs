@@ -12,7 +12,7 @@ namespace WepApp
             if (services == null || configuration == null)
                 return;
 
-            services.AddTransient<ITokenServiceClient, TokenServiceClient>();
+            services.AddTransient<IAuthServiceClient, Front.Infrastructure.ClientApi.AuthServiceClient>();
             services.AddTransient<IEmployeersClient, EmployeersClient>();
             services.Configure<TokenServiceSettings>(configuration.GetSection("TokenServiceSettings"));
 

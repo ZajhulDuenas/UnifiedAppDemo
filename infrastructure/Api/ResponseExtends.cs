@@ -1,11 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Api.infrastructure.Api
 {
@@ -22,8 +16,8 @@ namespace Api.infrastructure.Api
                 return new BadRequestObjectResult(response);
         }
 
-        public static IActionResult GetActionResult<T>(this Response<T> response)
-            where T : class
+        public static IActionResult GetCustomActionResult(this Response response)
+       
         {
             if (response == null)
                 return new BadRequestObjectResult("Sin respuesta");
@@ -34,8 +28,8 @@ namespace Api.infrastructure.Api
                 return new BadRequestObjectResult(response);
         }
 
-        public static IActionResult GetCustomActionResult(this Response response)
-       
+        public static IActionResult GetActionResult<T>(this Response<T> response)
+           where T : class
         {
             if (response == null)
                 return new BadRequestObjectResult("Sin respuesta");

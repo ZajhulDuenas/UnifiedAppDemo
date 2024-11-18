@@ -10,9 +10,8 @@
     protected override async Task OnInitializedAsync()
     {
         // Verifica si el usuario está autenticado
-        var isAuthenticated = await AuthService.IsAuthenticated();
-
-        if (!isAuthenticated)
+      
+        if (!AuthService.IsAuthenticated)
         {
             // Redirige a la página de login
             Navigation.NavigateTo("/login", forceLoad: true);

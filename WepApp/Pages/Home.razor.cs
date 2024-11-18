@@ -1,6 +1,5 @@
-﻿using Front.Infrastructure.ClientApi;
-using Microsoft.AspNetCore.Components;
-using WepApp.Models;
+﻿using Microsoft.AspNetCore.Components;
+using WepApp.Models.Layuout;
 using WepApp.Services;
 
 namespace WepApp.Pages
@@ -16,11 +15,10 @@ namespace WepApp.Pages
         protected override async Task OnInitializedAsync()
         {
             if (AuthService != null) {
-                isAuthenticated = await AuthService.IsAuthenticated();
-
+                isAuthenticated = AuthService.IsAuthenticated;
                 if (isAuthenticated)
                 {
-                    var info = await VarsService.ExtractObject<UserModel>("UserModel");
+                    var info = await VarsService.ExtractObject<UserLayout>("UserModel");
 
                     Name = info.Name;
                 }
