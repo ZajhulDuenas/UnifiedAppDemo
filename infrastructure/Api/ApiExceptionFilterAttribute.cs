@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System.Net;
-using Models;
+using Api.Models;
 
 namespace infrastructure.Api
 {

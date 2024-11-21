@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\common\common.csproj" />
     <ProjectReference Include="..\front.infrastructure\Front.Infrastructure.csproj" />
   </ItemGroup>
 

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using WepApp;
-using WepApp.Services;
+using WepApp.Core.Services;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 

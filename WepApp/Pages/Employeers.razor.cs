@@ -5,8 +5,7 @@ using Microsoft.JSInterop;
 using Models.ClientApi;
 using Models.DTOs;
 using System.ComponentModel.DataAnnotations;
-using WepApp.Models.Layuout;
-using WepApp.Services;
+using WepApp.Core.Entities;
 
 namespace WepApp.Pages
 {
@@ -15,8 +14,7 @@ namespace WepApp.Pages
 
         [Inject] protected IJSRuntime JS { get; set; }
         [Inject] protected AuthService AuthService { get; set; }
-        [Inject] protected VarsService VarsService { get; set; }
-
+       
         [Inject] protected NavigationManager Navigation { get; set; }
 
         [Inject] private IEmployeersClient employeersClient { get; set; } = default!;
@@ -26,7 +24,7 @@ namespace WepApp.Pages
         private bool isAuthenticated { get; set; } = false;
         private int IndexPagination { get; set; } = 1;
         private string message { get; set; } = "";
-        private UserLayout userModel { get; set; } = new UserLayout();
+        private UserEntitie userModel { get; set; } = new UserEntitie();
         private List<EmployeeRequestDto> EmployeeList { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
@@ -79,9 +77,7 @@ namespace WepApp.Pages
                 return false;
             }
 
-            isAuthenticated = AuthService.IsAuthenticated;
-
-
+            isAuthenticated = await AuthService.CheckIsAuthenticated();
 
             if (!isAuthenticated)
             {
@@ -96,7 +92,7 @@ namespace WepApp.Pages
             employeersClient.ClientToken = new ClientToken() { Token = token };
 
             message = "";
-            userModel = await VarsService.ExtractObject<UserLayout>("UserModel");
+            userModel = await AuthService.GetInfoUser(); // await VarsService.ExtractObject<UserEntitie>("UserModel");
 
             if (isAuthenticated && userModel != null && !userModel.ReadList)
             {
@@ -184,8 +180,6 @@ namespace WepApp.Pages
             employeersClient.ClientToken = new ClientToken() { Token = token };
 
             var response = await employeersClient.ModifyEmployee(SelectedEmployee).ConfigureAwait(false);
-
-            // EmployeeList = response.Payload;
 
             // Encuentra el empleado en la lista y actualiza sus datos
             var employee = EmployeeList.FirstOrDefault(e => e.Id == SelectedEmployee.Id);

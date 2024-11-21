@@ -11,7 +11,7 @@
     {
         // Verifica si el usuario está autenticado
       
-        if (!AuthService.IsAuthenticated)
+        if (!await AuthService.CheckIsAuthenticated())
         {
             // Redirige a la página de login
             Navigation.NavigateTo("/login", forceLoad: true);

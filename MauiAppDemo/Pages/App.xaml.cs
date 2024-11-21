@@ -1,26 +1,23 @@
-﻿using MauiAppDemo.common;
-using MauiAppDemo.ViewModels;
-using System.Text.Json;
+﻿using MauiAppDemo.ViewModels;
 
 namespace MauiAppDemo.Pages
 {
     public partial class App : Application
     {
-        public static AppSettings Settings { get; private set; } = new AppSettings();
+       // public static AppSettings Settings { get; private set; } = new AppSettings();
 
         public App()
         {
             InitializeComponent();
-           
+
+            // Cargar configuraciones
+           // LoadAppSettings();
+
         }
 
         public App(LoginViewModel loginViewModel)
         {
           
-            // Cargar configuraciones
-            LoadAppSettings();
-
-
             // MainPage = new LoginPage();
 
             MainPage = new NavigationPage(new LoginPage
@@ -29,6 +26,7 @@ namespace MauiAppDemo.Pages
             });
         }
 
+        /*
         private void LoadAppSettings()
         {
             var filePath = Path.Combine(FileSystem.Current.AppDataDirectory, "appsettings.json");
@@ -43,5 +41,7 @@ namespace MauiAppDemo.Pages
                 Settings = new AppSettings(); // Valores por defecto si el archivo no existe
             }
         }
+
+        */
     }
 }

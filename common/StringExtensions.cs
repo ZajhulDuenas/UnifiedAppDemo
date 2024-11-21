@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 namespace common
@@ -69,6 +70,38 @@ namespace common
             }
 
             return JsonConvert.DeserializeObject<T>(json, serializerSettings);
+        }
+
+        public static bool IsJwtExpired(this string token)
+        {
+            try
+            {
+                // Decodificar el JWT sin verificar la firma
+                var handler = new JwtSecurityTokenHandler();
+                var jsonToken = handler.ReadToken(token) as JwtSecurityToken;
+
+                if (jsonToken == null)
+                    throw new ArgumentException("El token no es válido.");
+
+                // Obtener la fecha de expiración (exp) del payload
+                var exp = jsonToken.Payload.Exp;
+
+                // Si no existe la propiedad 'exp', el token no tiene expiración
+                if (!exp.HasValue)
+                    return false;
+
+                // Comprobar si la fecha de expiración ha pasado
+                var expiryDate = DateTimeOffset.FromUnixTimeSeconds(exp.Value);
+                var currentDate = DateTimeOffset.UtcNow;
+
+                return expiryDate <= currentDate;
+            }
+            catch (Exception ex)
+            {
+                // Manejo de errores, por ejemplo si el JWT no es válido
+                Console.WriteLine($"Error al validar el token: {ex.Message}");
+                return true; // Si el token es inválido, lo consideramos "expirado"
+            }
         }
     }
 }

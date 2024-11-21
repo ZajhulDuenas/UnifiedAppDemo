@@ -1,5 +1,5 @@
 ﻿using interfaces.DataBase;
-using Models;
+using Api.Models;
 using Models.DTOs;
 using common;
 using ClosedXML.Excel;

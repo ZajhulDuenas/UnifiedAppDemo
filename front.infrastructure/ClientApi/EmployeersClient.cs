@@ -1,6 +1,6 @@
-﻿using common;
+﻿using Api.Models;
+using common;
 using Microsoft.Extensions.Configuration;
-using Models;
 using Models.ClientApi;
 using Models.ClientApi.Base;
 using Models.DTOs;
@@ -25,7 +25,7 @@ namespace Front.Infrastructure.ClientApi
         public override ClientToken? ClientToken { get; set; }
 
 
-        public async Task<Models.Response<List<EmployeeRequestDto>>> GetEmployeersByIndex(int index = 1, int pageSize = 10)
+        public async Task<Response<List<EmployeeRequestDto>>> GetEmployeersByIndex(int index = 1, int pageSize = 10)
         {
             CheckParameters();
 
@@ -86,7 +86,7 @@ namespace Front.Infrastructure.ClientApi
 
         }
 
-        public async Task<Models.Response<EmployeeRequestDto>> DeleteEmployee(int id)
+        public async Task<Response<EmployeeRequestDto>> DeleteEmployee(int id)
         {
             CheckParameters();
 
@@ -146,7 +146,7 @@ namespace Front.Infrastructure.ClientApi
 
         }
 
-        public async Task<Models.Response<EmployeeRequestDto>> ModifyEmployee(EmployeeRequestDto request)
+        public async Task<Response<EmployeeRequestDto>> ModifyEmployee(EmployeeRequestDto request)
         {
             CheckParameters();
 
@@ -208,11 +208,11 @@ namespace Front.Infrastructure.ClientApi
 
         }
 
-        public async Task<Models.Response<EmployeeRequestDto>> AddEmployee(EmployeeRequestDto request)
+        public async Task<Response<EmployeeRequestDto>> AddEmployee(EmployeeRequestDto request)
         {
             CheckParameters();
 
-            var response = new Models.Response<EmployeeRequestDto>();
+            var response = new Response<EmployeeRequestDto>();
 
             try
             {
@@ -252,7 +252,7 @@ namespace Front.Infrastructure.ClientApi
                         return response.AddError($"Ocurrió un error al consumir: {endpoint}");
                     }
 
-                    var result = responseContent.DeserializeJson<Models.Response<EmployeeRequestDto>>();
+                    var result = responseContent.DeserializeJson<Response<EmployeeRequestDto>>();
 
                     // response.Payload = result.Payload;
 
@@ -270,11 +270,11 @@ namespace Front.Infrastructure.ClientApi
 
         }
 
-        public async Task<Models.Response<byte[]>> ExportData()
+        public async Task<Response<byte[]>> ExportData()
         {
             CheckParameters();
 
-            Models.Response<byte[]> result = new Models.Response<byte[]>();
+            Response<byte[]> result = new Response<byte[]>();
 
             try
             {
@@ -324,7 +324,7 @@ namespace Front.Infrastructure.ClientApi
         {
             CheckParameters();
 
-            Models.Response<object> result = new Models.Response<object>();
+            Response<object> result = new Response<object>();
 
             try
             {
@@ -387,5 +387,6 @@ namespace Front.Infrastructure.ClientApi
                 throw new ArgumentException("Parametros de configuración EmployeersClient Api vacios o nulos");
 
         }
+
     }
 }

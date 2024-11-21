@@ -1,6 +1,6 @@
-﻿namespace WepApp.Models.Layuout
+﻿namespace WepApp.Core.Entities
 {
-    public class UserLayout
+    public class UserEntitie
     {
         public int Id { get; set; }
         public string Name { get; set; } = string.Empty;

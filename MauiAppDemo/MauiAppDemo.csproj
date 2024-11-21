@@ -57,26 +57,35 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0" />
+		<PackageReference Include="Refractored.MvvmHelpers" Version="1.6.2" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\front.infrastructure\Front.Infrastructure.csproj" />
 	  <ProjectReference Include="..\front.UserStories\front.UserStories.csproj" />
 	  <ProjectReference Include="..\interfaces\interfaces.csproj" />
-	  <ProjectReference Include="..\Models\Models.csproj" />
+	  <ProjectReference Include="..\Models\Api.Models.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Pages\EmployeersList.xaml.cs">
+	    <DependentUpon>EmployeersList.xaml</DependentUpon>
+	  </Compile>
 	  <Compile Update="Pages\LoginPage.xaml.cs">
 	    <DependentUpon>LoginPage.xaml</DependentUpon>
 	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Pages\EmployeersList.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\HomePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
@@ -90,6 +99,15 @@
 
 	<ItemGroup>
 	  <Folder Include="Services\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="appsettings.Development.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="appsettings.json">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 </Project>

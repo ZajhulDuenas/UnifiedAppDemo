@@ -1,9 +1,9 @@
-﻿using Models;
-using Models.ClientApi;
-using Models.ClientApi.Base;
-using common;
+﻿using common;
 using System.Net.Http.Json;
 using Microsoft.Extensions.Configuration;
+using Models.ClientApi.Base;
+using Models.ClientApi;
+using Api.Models;
 
 
 namespace Front.Infrastructure.ClientApi
@@ -11,8 +11,6 @@ namespace Front.Infrastructure.ClientApi
     public class AuthServiceClient(IConfiguration configuration) : BaseClientApi, IAuthServiceClient
     {
         private readonly IConfiguration configuration = configuration;
-
-
 
         const string AUTH_TOKEN = "/GetToken";
 

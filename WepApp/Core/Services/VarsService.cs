@@ -1,8 +1,7 @@
 ﻿using Microsoft.JSInterop;
 using System.Text.Json;
-using System;
 
-namespace WepApp.Services
+namespace WepApp.Core.Services
 {
 
     public class VarsService
@@ -11,7 +10,7 @@ namespace WepApp.Services
 
         public VarsService()
         {
-         
+
         }
 
         public VarsService(IJSRuntime js)

@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Headers;
+﻿using Api.Models;
+using System.Net.Http.Headers;
 
 namespace Models.ClientApi.Base
 {

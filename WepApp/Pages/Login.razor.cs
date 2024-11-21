@@ -1,26 +1,17 @@
-﻿using Front.Infrastructure.ClientApi;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using System.ComponentModel.DataAnnotations;
-using WepApp.Models.Layuout;
-using WepApp.Services;
 
 namespace WepApp.Pages
 {
     public partial class LoginBase : ComponentBase
     {
-        [Inject] private IAuthServiceClient tokenServiceClient { get; set; } = default!;
-        [Inject] public IConfiguration configuration { get; set; } = default!;
 
-        [Inject] protected HttpClient Http { get; set; }
         [Inject] protected NavigationManager Navigation { get; set; }
         //  [Inject] protected IJSRuntime JS { get; set; } // Para interactuar con localStorage
         [Inject] protected AuthService AuthService { get; set; }
-        [Inject] protected VarsService VarsService { get; set; }
-
+     
         protected LoginLayout LoginLayout = new LoginLayout();
 
-       // protected string Username { get; set; }
-       // protected string Password { get; set; }
         protected string Message { get; set; }
 
         protected async Task HandleLogin()
@@ -28,37 +19,10 @@ namespace WepApp.Pages
             try
             {
 
-                //tokenServiceClient.baseEndPoint = configuration["UrlsServices:UrlBase"];
-               // tokenServiceClient.userName = LoginModel.Username;
-               // tokenServiceClient.password = LoginModel.Password;
+                var IsAutenticated = await AuthService.LoginAsync(LoginLayout.Username, LoginLayout.Password);
 
-                var response = await tokenServiceClient.OnBasicGetToken(LoginLayout.Username, LoginLayout.Password);
-
-                if (response.Success)
-                {
-                    
-                    var token = response.Payload.Token;
-
-                    // extraer ckaims
-                    var claims_list = JwtTokenService.GetClaimsFromJwt(token);
-
-                    var LocalUser = new UserLayout();
-
-                    LocalUser.Id = int.Parse(claims_list.FirstOrDefault(c => c.Type == "userId").Value);
-                    LocalUser.Name = claims_list.FirstOrDefault(c => c.Type == "realName").Value;
-                    LocalUser.ReadList = claims_list.FirstOrDefault(c => c.Type == "Listar").Value == "True";
-                    LocalUser.AddUser = claims_list.FirstOrDefault(c => c.Type == "Crear").Value == "True";
-                    LocalUser.ModifyUser = claims_list.FirstOrDefault(c => c.Type == "Actualizar").Value == "True";
-                    LocalUser.DeleteUser = claims_list.FirstOrDefault(c => c.Type == "Eliminar").Value == "True";
-                    LocalUser.ImportList = claims_list.FirstOrDefault(c => c.Type == "Importar").Value == "True";
-                    LocalUser.ExportList = claims_list.FirstOrDefault(c => c.Type == "Exportar").Value == "True";
-
-                    // Usa AuthService para guardar el token
-                    await AuthService.LoginAsync(token);
-
-                    // guarda info de usuario
-                    await VarsService.SetObject<UserLayout>("UserModel", LocalUser);
-
+                if (IsAutenticated)
+                { 
                     // Redirige al usuario a la página principal
                     Navigation.NavigateTo("/");
                 }

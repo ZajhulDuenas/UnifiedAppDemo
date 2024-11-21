@@ -4,7 +4,7 @@
 @code {
     protected override async Task OnInitializedAsync()
     {
-        var isAuthenticated = AuthService.IsAuthenticated;
+        var isAuthenticated = await AuthService.CheckIsAuthenticated();
         if (!isAuthenticated)
 
         {

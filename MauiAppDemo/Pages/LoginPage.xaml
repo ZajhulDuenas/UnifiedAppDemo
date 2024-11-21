@@ -2,57 +2,52 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppDemo.Pages.LoginPage"
-             Title="Inicio de Sesión">
-
-
+             Title="Login">
 
     <VerticalStackLayout Padding="30" Spacing="20" VerticalOptions="Center">
-       
-            <Image Source="https://media.giphy.com/media/dcMjM5PAYSpjO/giphy.gif"
+
+        <Image Source="https://media.giphy.com/media/dcMjM5PAYSpjO/giphy.gif"
                HeightRequest="90"
                Aspect="AspectFit"
                SemanticProperties.Description="dot net bot in a race car number eight" />
 
-            <Label Text="Ingresa tus credenciales para acceder" FontSize="Subtitle"
-                   VerticalOptions="Center" 
-                   HorizontalOptions="Center" />
+        <Label Text="Ingresa tus credenciales para acceder" FontSize="Subtitle"
+               VerticalOptions="Center" 
+               HorizontalOptions="Center" />
 
-        
-            <!-- Usuario -->
-            <Entry Placeholder="Username"
-               Text="{Binding Username}"
-               VerticalOptions="CenterAndExpand" />
+        <!-- Usuario -->
+        <Entry Placeholder="Username"
+               Text="{Binding Login.UserName}"
+               VerticalOptions="CenterAndExpand"
+               IsEnabled="{Binding IsNotBusy}" />
+        <!-- Asegura que el campo esté habilitado solo cuando no esté en carga -->
 
-            <!-- Contraseña -->
-            <Entry Placeholder="Password"
+        <!-- Contraseña -->
+        <Entry Placeholder="Password"
                IsPassword="True"
-               Text="{Binding Password}"
-               VerticalOptions="CenterAndExpand" />
+               Text="{Binding Login.Password}"
+               VerticalOptions="CenterAndExpand"
+               IsEnabled="{Binding IsNotBusy}" />
+        <!-- Similar al campo de usuario -->
 
-            <!-- Botón de Login -->
-            <Button Text="Login"
+        <!-- Indicador de carga -->
+        <ActivityIndicator IsRunning="{Binding IsBusy}"
+                           IsVisible="{Binding IsBusy}"
+                           VerticalOptions="Center"
+                           HorizontalOptions="Center" />
+
+        <!-- Botón de Login -->
+        <Button Text="Login"
                 Command="{Binding LoginCommand}"
-                VerticalOptions="CenterAndExpand" />
+                VerticalOptions="CenterAndExpand"
+                IsEnabled="{Binding IsNotBusy}" />
+        <!-- Desactiva el botón durante la carga -->
 
-
-        <Label Text="{Binding Message}" FontSize="Small" TextColor="OrangeRed"
-          VerticalOptions="Center" 
-          HorizontalOptions="Center" />
-        <!-- 
-        <Entry x:Name="UserNameEntry"
-               Placeholder="Nombre de Usuario"
-               Text="{Binding _username}" />
-
-        <Entry x:Name="PasswordEntry"
-               Placeholder="Contraseña"
-               Text="{Binding _password}"
-               IsPassword="True" />
-
-        <Button Text="Iniciar Sesión"
-                Clicked="OnLoginButtonClicked"
-                BackgroundColor="DodgerBlue"
-                TextColor="White" />
-        
-        -->
+        <!-- Mensaje de Error -->
+        <Label Text="{Binding Message}"
+               FontSize="Small"
+               TextColor="OrangeRed"
+               VerticalOptions="Center" 
+               HorizontalOptions="Center" />
     </VerticalStackLayout>
 </ContentPage>
