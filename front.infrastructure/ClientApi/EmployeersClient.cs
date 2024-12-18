@@ -25,11 +25,11 @@ namespace Front.Infrastructure.ClientApi
         public override ClientToken? ClientToken { get; set; }
 
 
-        public async Task<Response<List<EmployeeRequestDto>>> GetEmployeersByIndex(int index = 1, int pageSize = 10)
+        public async Task<Response<List<EmployeeDto>>> GetEmployeersByIndex(int index = 1, int pageSize = 10)
         {
             CheckParameters();
 
-            var response = new Response<List<EmployeeRequestDto>>();
+            var response = new Response<List<EmployeeDto>>();
 
             try
             {
@@ -68,7 +68,7 @@ namespace Front.Infrastructure.ClientApi
                         return response.AddError($"Ocurrió un error al consumir: {endpoint}");
                     }
 
-                    var result = responseContent.DeserializeJson<Response<List<EmployeeRequestDto>>>();
+                    var result = responseContent.DeserializeJson<Response<List<EmployeeDto>>>();
 
                     // response.Payload = result.Payload;
 
@@ -86,11 +86,11 @@ namespace Front.Infrastructure.ClientApi
 
         }
 
-        public async Task<Response<EmployeeRequestDto>> DeleteEmployee(int id)
+        public async Task<Response<EmployeeDto>> DeleteEmployee(int id)
         {
             CheckParameters();
 
-            var response = new Response<EmployeeRequestDto>();
+            var response = new Response<EmployeeDto>();
 
             try
             {
@@ -128,7 +128,7 @@ namespace Front.Infrastructure.ClientApi
                         return response.AddError($"Ocurrió un error al consumir: {endpoint}");
                     }
 
-                    var result = responseContent.DeserializeJson<Response<EmployeeRequestDto>>();
+                    var result = responseContent.DeserializeJson<Response<EmployeeDto>>();
 
                     // response.Payload = result.Payload;
 
@@ -146,11 +146,11 @@ namespace Front.Infrastructure.ClientApi
 
         }
 
-        public async Task<Response<EmployeeRequestDto>> ModifyEmployee(EmployeeRequestDto request)
+        public async Task<Response<EmployeeDto>> ModifyEmployee(EmployeeDto request)
         {
             CheckParameters();
 
-            var response = new Response<EmployeeRequestDto>();
+            var response = new Response<EmployeeDto>();
 
             try
             {
@@ -190,7 +190,7 @@ namespace Front.Infrastructure.ClientApi
                         return response.AddError($"Ocurrió un error al consumir: {endpoint}");
                     }
 
-                    var result = responseContent.DeserializeJson<Response<EmployeeRequestDto>>();
+                    var result = responseContent.DeserializeJson<Response<EmployeeDto>>();
 
                     // response.Payload = result.Payload;
 
@@ -208,11 +208,11 @@ namespace Front.Infrastructure.ClientApi
 
         }
 
-        public async Task<Response<EmployeeRequestDto>> AddEmployee(EmployeeRequestDto request)
+        public async Task<Response<EmployeeDto>> AddEmployee(EmployeeDto request)
         {
             CheckParameters();
 
-            var response = new Response<EmployeeRequestDto>();
+            var response = new Response<EmployeeDto>();
 
             try
             {
@@ -252,7 +252,7 @@ namespace Front.Infrastructure.ClientApi
                         return response.AddError($"Ocurrió un error al consumir: {endpoint}");
                     }
 
-                    var result = responseContent.DeserializeJson<Response<EmployeeRequestDto>>();
+                    var result = responseContent.DeserializeJson<Response<EmployeeDto>>();
 
                     // response.Payload = result.Payload;
 

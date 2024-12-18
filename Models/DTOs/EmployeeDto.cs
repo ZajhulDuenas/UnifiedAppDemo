@@ -1,20 +1,21 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
 
 namespace Models.DTOs
 {
-    public  class EmployeeDto
+    public class EmployeeDto
     {
+        [JsonProperty("idEmpleado")]
+        public int Id;
 
-        [Required(ErrorMessage = "El nombre de usuario es obligatorio")] // Campo obligatorio
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "El nombre debe tener entre 3 y 50 caracteres")]
-        public string? Name { get; set; }
+        [JsonProperty("nombre")]
+        public string Name;
 
-        [Required(ErrorMessage = "RFC es obligatorio")] // Campo obligatorio
-        [StringLength(12, MinimumLength = 3, ErrorMessage = "El RFC tener entre 3 y 12 caracteres")]
-        public string? Rfc { get; set; }
+        [JsonProperty("rfc")]
+        public string Rfc;
 
-       // [DataType(DataType.Date)]
-        [Display(Name = "Fecha de Nacimiento")]
-        public DateTime DateBirth { get; set; }
+        [JsonProperty("fechaNacimiento")]
+        public DateTime DateBirth;
     }
 }
+
+

@@ -1,4 +1,7 @@
-﻿namespace Models.DataBase;
+﻿using System;
+using System.Collections.Generic;
+
+namespace Api.Models.DataBase;
 
 public partial class CatUsuario
 {

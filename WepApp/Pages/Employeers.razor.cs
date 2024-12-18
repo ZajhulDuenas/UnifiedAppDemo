@@ -25,7 +25,7 @@ namespace WepApp.Pages
         private int IndexPagination { get; set; } = 1;
         private string message { get; set; } = "";
         private UserEntitie userModel { get; set; } = new UserEntitie();
-        private List<EmployeeRequestDto> EmployeeList { get; set; } = default!;
+        private List<EmployeeDto> EmployeeList { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
@@ -152,12 +152,12 @@ namespace WepApp.Pages
 
         #region Modify Employee
         private bool ShowEditDialog = false;
-        private EmployeeRequestDto SelectedEmployee = new EmployeeRequestDto();
+        private EmployeeDto SelectedEmployee = new EmployeeDto();
 
-        private void ShowEditModal(EmployeeRequestDto employee)
+        private void ShowEditModal(EmployeeDto employee)
         {
             // Copia los datos del empleado seleccionado para edición
-            SelectedEmployee = new EmployeeRequestDto
+            SelectedEmployee = new EmployeeDto
             {
                 Id = employee.Id,
                 Name = employee.Name,
@@ -222,7 +222,7 @@ namespace WepApp.Pages
 
             // Lógica para salvar cambios del empleado
 
-            var employee = new EmployeeRequestDto()
+            var employee = new EmployeeDto()
             {
                 DateBirth = newEmployee.FechaNacimiento,
                 Id = newEmployee.IdEmpleado,
@@ -335,7 +335,7 @@ namespace WepApp.Pages
 
                 var response = await employeersClient.ImportData(content).ConfigureAwait(false);
 
-                EmployeeList = new List<EmployeeRequestDto>();
+                EmployeeList = new List<EmployeeDto>();
 
                 IndexPagination = 1;
                 await refreshEmployeTableAsync();

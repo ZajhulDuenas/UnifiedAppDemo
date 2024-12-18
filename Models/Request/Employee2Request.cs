@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Models.DTOs
+namespace Api.Models.Request
 {
-    public class Employee2RequestDto
+    public class Employee2Request
     {
         [Required(ErrorMessage = "id de empleado requerido")] // Campo obligatorio
         public int EmployeeId { get; set; }

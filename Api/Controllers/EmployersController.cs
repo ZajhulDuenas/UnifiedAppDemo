@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Models.DTOs;
 using UserStories.login;
 using Api.infrastructure.Api;
+using Api.Models.Request;
 
 
 namespace WebApi.Controllers
@@ -29,7 +29,7 @@ namespace WebApi.Controllers
         [HttpPost]
         [Route("GetEmployees")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "ShowListPolicy")] // aply custom Politic
-        public async Task<IActionResult> GetAlllist([FromBody] PaginationDto request)
+        public async Task<IActionResult> GetAlllist([FromBody] PaginationRequest request)
         {
             if (request == null)
                 return BadRequest("Parametro de entrada nulo");
@@ -42,7 +42,7 @@ namespace WebApi.Controllers
         [HttpPost]
         [Route("GetEmployeById")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "ShowListPolicy")] // aply custom Politic
-        public async Task<IActionResult> GetlistById([FromBody] EmployeeIdDto request)
+        public async Task<IActionResult> GetlistById([FromBody] EmployeeIdRequest request)
         {
 
             var response = await employeeUser.GetEmployeById(request).ConfigureAwait(false);
@@ -54,7 +54,7 @@ namespace WebApi.Controllers
         [HttpPost]
         [Route("AddEmployee")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "CreatePolicy")] // aply custom Politic
-        public async Task<IActionResult> Create([FromBody] EmployeeDto request)
+        public async Task<IActionResult> Create([FromBody] EmployeeRequest request)
         {
             
             if (request == null)
@@ -68,7 +68,7 @@ namespace WebApi.Controllers
         [HttpPost]
         [Route("DeleteEmployee")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "DeletePolicy")] // aply custom Politic
-        public async Task<IActionResult> Delete([FromBody] EmployeeIdDto request)
+        public async Task<IActionResult> Delete([FromBody] EmployeeIdRequest request)
         {
 
             if (request == null)
@@ -82,7 +82,7 @@ namespace WebApi.Controllers
         [HttpPost]
         [Route("ModifyEmployee")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Policy = "UpdatePolicy")] // aply custom Politic
-        public async Task<IActionResult> Modify([FromBody] Employee2RequestDto request)
+        public async Task<IActionResult> Modify([FromBody] Employee2Request request)
         {
 
             if (request == null)

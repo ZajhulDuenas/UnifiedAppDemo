@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Models.DataBase;
+namespace Api.Models.DataBase;
 
 public partial class TblEmpleado
 {

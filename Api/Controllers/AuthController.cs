@@ -1,7 +1,7 @@
 ﻿using Interfaces.UserStory;
 using Microsoft.AspNetCore.Mvc;
-using Models.DTOs;
 using Api.infrastructure.Api;
+using Api.Models.Request;
 
 namespace WebApi.Controllers
 {
@@ -14,7 +14,7 @@ namespace WebApi.Controllers
        
         [HttpPost]
         [Route("GetToken")]
-        public async Task<IActionResult> getToken(LoginDto request)
+        public async Task<IActionResult> getToken(LoginRequest request)
         {
             if (request == null)
                 return BadRequest("Parametro de entrada nulo");

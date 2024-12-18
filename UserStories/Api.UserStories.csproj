@@ -14,7 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\common\common.csproj" />
     <ProjectReference Include="..\interfaces\interfaces.csproj" />
-    <ProjectReference Include="..\Models\Models.csproj" />
+    <ProjectReference Include="..\Models\Api.Models.csproj" />
   </ItemGroup>
 
 </Project>

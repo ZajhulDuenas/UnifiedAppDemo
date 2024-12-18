@@ -1,12 +1,12 @@
 ﻿using interfaces.DataBase;
 using Api.Models;
-using Models.DTOs;
 using common;
 using infrastructure.jwt;
 using Microsoft.Extensions.Configuration;
 using Interfaces.UserStory;
 using Models.ClientApi;
 using Models.DataBase;
+using Api.Models.Request;
 
 
 namespace UserStories.login
@@ -17,7 +17,7 @@ namespace UserStories.login
     {
         private readonly IMyUnitOfWork unitOfWork = unitOfWork;
         private readonly IMyTokenGenerator tokenGenerator = tokenGenerator;
-        public async Task<Response<ClientToken>> GetToken(IConfiguration configuration, LoginDto request)
+        public async Task<Response<ClientToken>> GetToken(IConfiguration configuration, LoginRequest request)
         {
 
             // check user exist on database

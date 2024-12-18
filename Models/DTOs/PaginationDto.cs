@@ -1,14 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-
+﻿
 namespace Models.DTOs
 {
-    public class PaginationDto
+    public class PaginationDto<T>
+    where T : class
     {
-        [Required(ErrorMessage = "pageIndex Requerido")] // Campo obligatorio
-        [Range(minimum: 1,maximum: int.MaxValue, ErrorMessage = "Paginacion debe ser mayor a 0")]
-        public int pageIndex { get; set; } = 1;
-        [Required(ErrorMessage = "pageSize Requerido")] // Campo obligatorio
-        [Range(minimum: 1, maximum: 50, ErrorMessage = "Paginacion debe ser mayor a 0")]
-        public int pageSize { get; set; } = 10;
+        public List<T> Items { get; set; } = new List<T>();
+        public int SizePage { get; set; }
+        public int PageIndex { get; set; }
+        public int TotalPages { get; set; }
     }
 }

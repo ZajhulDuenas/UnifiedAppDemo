@@ -5,6 +5,7 @@ using common;
 using ClosedXML.Excel;
 using EFCore.BulkExtensions;
 using Models.DataBase;
+using Api.Models.Request;
 
 namespace UserStories.login
 {
@@ -35,7 +36,7 @@ namespace UserStories.login
             return result;
         }
 
-        public async Task<Response<List<TblEmpleado>>> GetEmployeList(PaginationDto request)
+        public async Task<Response<List<TblEmpleado>>> GetEmployeList(PaginationRequest request)
         {
             Response<List<TblEmpleado>> result = new Response<List<TblEmpleado>>();
 
@@ -64,7 +65,7 @@ namespace UserStories.login
         }
 
 
-        public async Task<Response<TblEmpleado>> GetEmployeById(EmployeeIdDto request)
+        public async Task<Response<TblEmpleado>> GetEmployeById(EmployeeIdRequest request)
         {
             Response<TblEmpleado> result = new Response<TblEmpleado>();
             // check user exist on database
@@ -89,7 +90,7 @@ namespace UserStories.login
             return result;
         }
 
-        public async Task<Response<TblEmpleado>> AddEmployee(EmployeeDto request)
+        public async Task<Response<TblEmpleado>> AddEmployee(EmployeeRequest request)
         {
             Response<TblEmpleado> result = new Response<TblEmpleado>();
             // check user exist on database
@@ -113,7 +114,7 @@ namespace UserStories.login
             return result;
         }
 
-        public async Task<Response<TblEmpleado>> DeleteEmployee(EmployeeIdDto request)
+        public async Task<Response<TblEmpleado>> DeleteEmployee(EmployeeIdRequest request)
         {
             Response<TblEmpleado> result = new Response<TblEmpleado>();
             // check user exist on database
@@ -136,13 +137,13 @@ namespace UserStories.login
             return result;
         }
 
-        public async Task<Response<TblEmpleado>> ModifyEmployee(Employee2RequestDto request)
+        public async Task<Response<TblEmpleado>> ModifyEmployee(Employee2Request request)
         {
             Response<TblEmpleado> result = new Response<TblEmpleado>();
             // check user exist on database
             var RepoEmpleado = unitOfWork.Repository<TblEmpleado>();
 
-            var response = await GetEmployeById(new EmployeeIdDto() { EmployeeId = request.EmployeeId }).ConfigureAwait(false);
+            var response = await GetEmployeById(new EmployeeIdRequest() { EmployeeId = request.EmployeeId }).ConfigureAwait(false);
 
             if (response.StatusCode >= 400 || response.Payload == null) return response;
 
@@ -170,7 +171,7 @@ namespace UserStories.login
 
             var res = await unitOfWork.SaveChangesAsync().ConfigureAwait(false);
 
-            var employee = await GetEmployeById(new EmployeeIdDto() { EmployeeId = request.EmployeeId }).ConfigureAwait(false);
+            var employee = await GetEmployeById(new EmployeeIdRequest() { EmployeeId = request.EmployeeId }).ConfigureAwait(false);
 
             result.StatusCode = 201;
             result.Message = "Done";

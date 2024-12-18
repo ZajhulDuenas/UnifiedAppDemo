@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Api.Models;
 using Models.ClientApi;
-using Models.DTOs;
+using Api.Models.Request;
 
 namespace Interfaces.UserStory
 {
     public interface ItokenUserStory
     {
-        Task<Response<ClientToken>> GetToken(IConfiguration configuration, LoginDto request);
+        Task<Response<ClientToken>> GetToken(IConfiguration configuration, LoginRequest request);
     }
 }
