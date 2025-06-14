@@ -1,3 +1,13 @@
+
+###Full Stack .NET App with Blazor, MAUI, and ASP.NET Core
+
+This is a sample full stack application built with ASP.NET Core Web API, .NET MAUI, and Blazor.
+It demonstrates how to create a modular, cross-platform solution using modern .NET technologies for backend services, desktop/mobile apps, and web interfaces.
+
+
+
+ef core - orm commands
+
 dotnet ef dbcontext scaffold "Server=192.168.0.8;Database=JDV_Examen;User Id=sa;Password=Pa$$w0rd#123;TrustServerCertificate=true;" Microsoft.EntityFrameworkCore.SqlServer -o Models
 
 
